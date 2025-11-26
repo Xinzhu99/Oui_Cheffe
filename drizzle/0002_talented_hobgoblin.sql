@@ -1,0 +1,2 @@
+ALTER TABLE "shopping_list" ADD COLUMN "dish_id" integer;--> statement-breakpoint
+ALTER TABLE "shopping_list" ADD CONSTRAINT "shopping_list_dish_id_dishes_id_fk" FOREIGN KEY ("dish_id") REFERENCES "public"."dishes"("id") ON DELETE cascade ON UPDATE no action;
