@@ -1,13 +1,14 @@
 import { dish_categories, dishes } from "@/lib/db/schema";
 import { db } from "@/lib/db/drizzle";
 import { eq } from "drizzle-orm";
-import Image from 'next/image'
+import Image from "next/image";
 import ShowDishDetails from "./component/ShowDishDetails";
+import HeaderWrapper from "./component/HeaderWrapper";
 
 export default async function Home() {
   const recipes = await db
     .select({
-      dishId:dishes.id,
+      dishId: dishes.id,
       dishName: dishes.name,
       time: dishes.prep_time,
       dishCat: dish_categories.name,
@@ -17,18 +18,24 @@ export default async function Home() {
   console.log(recipes);
 
   return (
-    <div className="flex flex-wrap justify-evenly gap-4 p-4">
+    <div className="flex flex-col items-center">
+    <HeaderWrapper header="BIENVENUE A MA CUISINE"
+    text="With our diverse collection of recipes we have something to satisfy every palate."/>
+      <div className="flex flex-wrap justify-evenly gap-4 p-4">
+        {recipes.map((recipe) => (
+          <div
+            key={recipe.dishId}
+            className="recipeCard flex flex-col items-center justify-center bg-amber-200 w-60 rounded-2xl text-center"
+          >
+            <h1 className="text-xl">{recipe.dishName}</h1>
+            <Image src="/mockup.jpg" alt="recipe" width="200" height="150" />
+            <h2>{recipe.dishCat}</h2>
+            <h2>{recipe.time} min</h2>
 
-      {recipes.map((recipe) => (
-        <div key={recipe.dishId} className="recipeCard flex flex-col items-center justify-center bg-amber-200 w-60 rounded-2xl text-center">
-          <h1 className="text-xl">{recipe.dishName}</h1>
-          <Image src="/mockup.jpg"alt="recipe" width="200" height="150"/>
-          <h2>{recipe.dishCat}</h2>
-          <h2>{recipe.time} min</h2>
-          
-          < ShowDishDetails id={recipe.dishId}/>
-        </div>
-      ))}
+            <ShowDishDetails id={recipe.dishId} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
