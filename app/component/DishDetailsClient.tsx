@@ -47,7 +47,7 @@ export default function DishDetailsClient({ recipe }) {
           ))}
         </ul>
 
-        {/*partie hidden pour communiquer la date du front au back */}
+        {/*partie hidden pour communiquer la list ingrédients du front au back */}
         <input name="ingredients" type="hidden"
         value={JSON.stringify(recipe.ingredients.map((int)=> ({
           id:int.id,
