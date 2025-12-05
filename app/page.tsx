@@ -15,7 +15,7 @@ export default async function Home() {
     })
     .from(dishes)
     .leftJoin(dish_categories, eq(dish_categories.id, dishes.dish_category_id));
-  console.log(recipes);
+  console.log("recipe",recipes);
 
   return (
     <div className="flex flex-col items-center">

@@ -15,21 +15,6 @@ export default function DishDetailsClient({ recipe }) {
   //déclarer useActionState
   const [message, formAction] = useActionState(addToShoppingList, null);
 
-  //function handleSubmit:
-  //utiliser onSubmit me permet d'avoir accès aux states servings, state du côté client
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   const ajustedIngredients = recipe.ingredients.map((ingredient: any) => ({
-  //     id: ingredient.id,
-  //     quantity: ajustedQty(ingredient.quantity),
-  //   }));
-  //   //appler l'action
-  //   await addToShoppingList(ajustedIngredients, recipe.dishId);
-  //   console.log("id", recipe.dishId);
-  // };
-
   return (
     <div className="recipeCard">
       <h1 className="text-2xl">{recipe.dishName}</h1>
@@ -47,15 +32,7 @@ export default function DishDetailsClient({ recipe }) {
           ))}
         </ul>
 
-        {/*partie hidden pour communiquer la list ingrédients du front au back */}
-        <input name="ingredients" type="hidden"
-        value={JSON.stringify(recipe.ingredients.map((int)=> ({
-          id:int.id,
-          quantity: ajustedQty(int.quantity),
-          dishId: recipe.dishId
-        })
-        ))}
-        />
+       
 
         <h1 className="text-xl">Etapes : </h1>
         <p>{recipe.instructions}</p>
@@ -71,6 +48,7 @@ export default function DishDetailsClient({ recipe }) {
             -
           </button>
           <input
+          name="services"
             className="counter bg-amber-50 w-4"
             type="text"
             value={servings}
@@ -83,6 +61,9 @@ export default function DishDetailsClient({ recipe }) {
           >
             +
           </button>
+           <input name="dishId" 
+        value={recipe.dishId} type="hidden" readOnly
+        />
         </div>
 
         <button type="submit" className="bg-amber-200 p-2 rounded-2xl">

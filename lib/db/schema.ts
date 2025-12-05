@@ -36,7 +36,6 @@ export const dishes = pgTable("dishes", {
 
 export const shopping_list = pgTable("shopping_list", {
   id:serial("id").primaryKey(),
-  ingredient_id:integer("ingredient_id").notNull().references(() => ingredients.id),
-  quantity: integer("quantity").notNull(),
+  services: integer("services").notNull(),
   dish_id:integer("dish_id").references(()=>dishes.id,  {onDelete: "cascade"})
 })

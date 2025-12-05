@@ -12,12 +12,14 @@ export default async function MyList() {
   'id',ingredients.id,
   'unit',ingredients.unit,
   'name',ingredients.name,
-  'quantity',shopping_list.quantity
+  'quantity',dish_ingredients.quantity
   )
   ) AS ingredients
 FROM shopping_list
-LEFT JOIN ingredients ON ingredients.id = shopping_list.ingredient_id
 LEFT JOIN dishes ON dishes.id = shopping_list.dish_id
+  LEFT JOIN dish_ingredients ON dish_ingredients.dish_id =  dishes.id
+LEFT JOIN ingredients ON ingredients.id = dish_ingredients.ingredient_id
+
 GROUP BY dishes.name
     `
   );
