@@ -8,7 +8,7 @@ export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
       {recipes.map((recipe) => (
         <div
           key={recipe.dishId}
-          className="recipe-card group relative flex flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_4px_16px_rgba(45,106,79,0.08)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(45,106,79,0.15)] active:scale-[0.98]"
+          className="recipe-card group relative flex flex-col overflow-hidden rounded-[20px] bg-amber-50 shadow-[0_4px_16px_rgba(45,106,79,0.08)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(45,106,79,0.15)] active:scale-[0.98]"
         >
           {/* Image Container avec dégradé */}
           <div className="relative h-[200px] flex items-center justify-center overflow-hidden">
@@ -22,7 +22,7 @@ export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
             
             {/* Badge temps avec backdrop blur */}
             {recipe.time && (
-              <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-white/95 px-3.5 py-2 text-sm font-semibold text-orange-400 shadow-lg backdrop-blur-sm">
+              <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-amber-50 px-3.5 py-2 text-sm font-semibold text-orange-400 shadow-lg backdrop-blur-sm">
                 <span>⏱</span>
                 <span>{recipe.time} min</span>
               </div>
