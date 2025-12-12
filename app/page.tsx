@@ -1,9 +1,8 @@
 import { dish_categories, dishes } from "@/lib/db/schema";
 import { db } from "@/lib/db/drizzle";
 import { eq } from "drizzle-orm";
-import Image from "next/image";
-import ShowDishDetails from "./component/ShowDishDetails";
-import HeaderWrapper from "./component/HeaderWrapper";
+import HeaderWrapper from "./components/HeaderWrapper";
+import RecipesList from "./components/recipes/RecipesList";
 
 export default async function Home() {
   const recipes = await db
@@ -15,27 +14,16 @@ export default async function Home() {
     })
     .from(dishes)
     .leftJoin(dish_categories, eq(dish_categories.id, dishes.dish_category_id));
-  console.log("recipe",recipes);
 
   return (
-    <div className="flex flex-col items-center">
-    <HeaderWrapper header="BIENVENUE A MA CUISINE"
-    text="With our diverse collection of recipes we have something to satisfy every palate."/>
-      <div className="flex flex-wrap justify-evenly gap-4 p-4">
-        {recipes.map((recipe) => (
-          <div
-            key={recipe.dishId}
-            className="recipeCard flex flex-col items-center justify-center bg-amber-200 w-60 rounded-2xl text-center"
-          >
-            <h1 className="text-xl">{recipe.dishName}</h1>
-            <Image src="/mockup.jpg" alt="recipe" width="200" height="150" />
-            <h2>{recipe.dishCat}</h2>
-            <h2>{recipe.time} min</h2>
+    <div className="flex flex-col ">
+      <HeaderWrapper
+        header="De quoi t'as envie ?"
+        text="Bienvenue à la cuisine de Xinzhu !"
+      />
 
-            <ShowDishDetails id={recipe.dishId} />
-          </div>
-        ))}
-      </div>
+      {/*liste des recettes */}
+      <RecipesList recipes={recipes} />
     </div>
   );
 }

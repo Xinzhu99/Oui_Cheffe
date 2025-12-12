@@ -1,4 +1,4 @@
-import DishDetailsClient from "@/app/component/DishDetailsClient";
+import DishDetailsClient from "@/app/components/DishDetailsClient";
 import { db } from "@/lib/db/drizzle";
 import { dish_ingredients, dishes, ingredients } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";

@@ -6,7 +6,6 @@ import { useActionState } from "react";
 export default function DishDetailsClient({ recipe }) {
   const defaultServings = 2;
   const [servings, setServings] = useState(defaultServings);
-  const [loading, setLoading] = useState(false);
 
   //fonction permettant d'actualiser les quantité d'ingrédients
   const ajustedQty = (defaultQty: number) => {
