@@ -36,12 +36,11 @@ Design pensé pour une utilisation en magasin avec navigation par onglets et mic
 - [x] Maquette UI mobile
 - [x] Server Actions (CRUD)
 - [ ] Intégration frontend ↔ backend
+- [ ] 🚀 Feature IA : génération de recettes à partir de liens vidéos"
 - [ ] Déploiement
 
 **À venir**
 - Authentification utilisateur et partage des listes
-- Génération de recettes via l'IA Gen
-- 
 ## 👩‍💻 Auteure
 
 **Xinzhu** - Développeuse Fullstack Junior
