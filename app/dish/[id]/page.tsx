@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 
 export default async function DishDetails({ params }) {
   const { id } = await params;
+  console.log("id", id)
 
   //requête pour recevoir tous les détails liés au recipe choisi
   const recipeDetails = await db
@@ -21,10 +22,11 @@ export default async function DishDetails({ params }) {
       quantity: dish_ingredients.quantity,
     })
     .from(dishes)
-    .innerJoin(dish_ingredients, eq(dish_ingredients.dish_id, dishes.id))
-    .innerJoin(ingredients, eq(ingredients.id, dish_ingredients.ingredient_id))
+    .leftJoin(dish_ingredients, eq(dish_ingredients.dish_id, dishes.id))
+    .leftJoin(ingredients, eq(ingredients.id, dish_ingredients.ingredient_id))
     .where(eq(dishes.id, id));
-    console.log(recipeDetails)
+    
+    console.log("recipe",recipeDetails)
 
   //transformer en un seul objet avec une liste d'ingrédients
   const recipe = 
@@ -42,7 +44,7 @@ export default async function DishDetails({ params }) {
         }))
 
     } : null
-// console.log("recipe", recipeDetails);
+console.log("recipe", recipeDetails);
   
   return (
     <DishDetailsClient recipe={recipe} />

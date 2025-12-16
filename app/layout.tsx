@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="bg-[#FFFAF7]">
         <div className="nav-bar flex p-5  justify-evenly shadow-xl sticky">
           <div className=" link_wrapper flex gap-4 justify-between">
-            <Link href="/">Oui<span>Cheffe !</span></Link>
+            <Link href="/">Recettes</Link>
             <Link href="/my-list">Ma Liste </Link>
             <Link href="/my-dishes">Mon Menu</Link>
           </div>
