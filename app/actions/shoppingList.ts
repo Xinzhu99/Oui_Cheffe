@@ -5,9 +5,9 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 
 //function qui permet d'ajouter des ingrédients d'une recette au back table menu
-export async function addToShoppingList(dishId, servings) {
-  console.log("🎅", dishId);
-  console.log("😁", servings);
+export async function addToMenu(dishId, servings) {
+  // console.log("🎅", dishId);
+  // console.log("😁", servings);
 
   try {
     const id = await db

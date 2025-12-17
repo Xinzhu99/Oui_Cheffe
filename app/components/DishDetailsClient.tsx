@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { addToShoppingList } from "../actions/shoppingList";
+import { addToMenu } from "../actions/shoppingList";
 import Image from "next/image";
 
 export default function DishDetailsClient({ recipe }) {
@@ -16,7 +16,7 @@ export default function DishDetailsClient({ recipe }) {
 
   //fonction pour gérér le click bouton : appel d'action et recevoir le retour message
   const handleClick = async (id, servings) => {
-    const result = await addToShoppingList(recipe.dishId, servings);
+    const result = await addToMenu(recipe.dishId, servings);
     setMessage(result);
   };
 
