@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { addToMenu } from "../actions/shoppingList";
+import { addToMenu } from "../actions/menu";
 import Image from "next/image";
 
 export default function DishDetailsClient({ recipe }) {

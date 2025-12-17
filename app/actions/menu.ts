@@ -43,3 +43,36 @@ export async function addToMenu(dishId, servings) {
     };
   }
 }
+
+//function qui permet de retirer un plat du menu
+
+export async function deleteFromMenu (dishId) {
+
+  try {
+    const dish = await db.select().from(menu).where(eq(menu.dish_id, parseInt(dishId)))
+
+    console.log("😁",dish)
+    if (dish.length === 0) {
+      return ({
+        sucess: false,
+        message: "Le plat choisi n'existe pas dans votre menu"
+      })
+    }
+
+    await db.delete(menu).where(eq(menu.dish_id, parseInt(dishId)))
+
+    return {
+        success: true,
+        message: "Le plat a été retiré !",
+      };
+
+    revalidatePath("/my-dishes")
+  } catch (error) {
+    console.error("Having problem of API", error)
+    return {
+      sucess: false,
+      message:"API erreur"
+    }
+  }
+
+}
