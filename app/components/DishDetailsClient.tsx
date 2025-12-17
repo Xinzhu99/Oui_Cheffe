@@ -1,21 +1,28 @@
 "use client";
 import { useState } from "react";
 import { addToShoppingList } from "../actions/shoppingList";
-import { useActionState } from "react";
 import Image from "next/image";
+
 export default function DishDetailsClient({ recipe }) {
   const defaultServings = 2;
   const [servings, setServings] = useState(defaultServings);
-
+  const [message, setMessage] = useState<{success: boolean, message: string} | null >(null);
+  
+  
   //fonction permettant d'actualiser les quantité d'ingrédients
   const ajustedQty = (defaultQty: number) => {
     return Math.round((defaultQty / defaultServings) * servings);
   };
-  //déclarer useActionState
-  const [message, formAction] = useActionState(addToShoppingList, null);
+
+  //fonction pour gérér le click bouton : appel d'action et recevoir le retour message
+  const handleClick = async (id, servings) => {
+    const result = await addToShoppingList(recipe.dishId, servings);
+    setMessage(result);
+  };
 
   return (
     <div className=" h-3/10">
+      {/* partie image plat */}
       <div className="picWrapper">
         <Image
           src="/mockup.jpg"
@@ -26,6 +33,18 @@ export default function DishDetailsClient({ recipe }) {
         />
       </div>
 
+      {/* partie message */}
+      {message && (
+        <div
+          className={`m-4 p-4 rounded-2xl text-center font-bold ${
+            message.success
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {message.message}
+        </div>
+      )}
       {/* partie tite et prep time */}
       <div className="flex flex-col p-4 m-4 gap-4 border-b-2 border-gray-300">
         <h1 className="text-3xl text-orange-400">{recipe.dishName}</h1>
@@ -65,8 +84,7 @@ export default function DishDetailsClient({ recipe }) {
       <div></div>
       <h1 className="text-2xl text-orange-400 m-4 mt-8">📋 Ingrédients</h1>
 
-      <form action={formAction}
-      className="flex flex-col">
+      <div className="flex flex-col">
         {/*partie liste des ingrédients */}
         <ul className="m-4 ">
           {recipe.ingredients.map((ingredient: any) => (
@@ -86,18 +104,18 @@ export default function DishDetailsClient({ recipe }) {
 
         <h1 className="text-2xl text-orange-400 m-4 mt-8">👨‍🍳 Préparation</h1>
         <div className="bg-white rounded-2xl m-4 p-4 shadow ">
-          <p >
-            {recipe.instructions}
-          </p>
+          <p>{recipe.instructions}</p>
         </div>
 
-        <button 
-        type="submit" 
-        className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2">
+        <button
+        disabled={message?.success}
+          type="submit"
+          onClick={() => handleClick(recipe.dishId, servings)}
+          className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
+        >
           Ajouter à ma liste
         </button>
-        <p>{message}</p>
-      </form>
+      </div>
     </div>
   );
 }

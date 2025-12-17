@@ -10,7 +10,7 @@ export default function MergeIngredientsLists ({listsData}) {
             listByIngredient.push(ingredient)
         }
     }
-    console.log("listByIng", listByIngredient)
+    // console.log("listByIng", listByIngredient)
     let mergedList = []
     listByIngredient.forEach(ing => {
         const obj = mergedList.find(o => o.id === ing.id)
@@ -20,7 +20,7 @@ export default function MergeIngredientsLists ({listsData}) {
             mergedList.push(ing)
         }
     })
-    console.log("merged", mergedList)
+    // console.log("merged", mergedList)
     return (
         <>
             <button 
