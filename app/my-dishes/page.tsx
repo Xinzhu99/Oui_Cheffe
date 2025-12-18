@@ -2,6 +2,8 @@ import { db } from "@/lib/db/drizzle";
 import { eq, sql } from "drizzle-orm";
 import MenuContent from "../components/menu/MenuContent";
 import HeaderWrapper from "../components/HeaderWrapper";
+import addToShoppingList from "../actions/shoppingList";
+import CreateList from "../components/menu/CreateList";
 
 export default async function MyDishes() {
   const menuData = await db.execute(sql`
@@ -26,12 +28,7 @@ export default async function MyDishes() {
       <HeaderWrapper header="Mon menu" text="Vos plats à cuisiner" />
 
       <MenuContent menu={menuArr} />
-      <button
-        type="submit"
-        className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
-      >
-        Créer ma liste
-      </button>
+      < CreateList />
     </div>
   );
 }

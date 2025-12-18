@@ -26,7 +26,7 @@ export default async function DishDetails({ params }) {
     .leftJoin(ingredients, eq(ingredients.id, dish_ingredients.ingredient_id))
     .where(eq(dishes.id, id));
     
-    // console.log("recipe",recipeDetails)
+    console.log("recipe",recipeDetails)
 
   //transformer en un seul objet avec une liste d'ingrédients
   const recipe = 

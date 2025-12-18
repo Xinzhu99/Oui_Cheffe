@@ -60,13 +60,13 @@ export async function deleteFromMenu (dishId) {
     }
 
     await db.delete(menu).where(eq(menu.dish_id, parseInt(dishId)))
+    revalidatePath("/my-dishes")
 
     return {
         success: true,
         message: "Le plat a été retiré !",
       };
 
-    revalidatePath("/my-dishes")
   } catch (error) {
     console.error("Having problem of API", error)
     return {

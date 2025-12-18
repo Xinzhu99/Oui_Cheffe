@@ -7,7 +7,11 @@ export default function MenuContent({menu}) {
   const handleClick = async (id) => {
       await deleteFromMenu(id)
   }
-
+  if (menu.length === 0) {
+    return(
+      <div className="m-4 p-4">Vous n'avez pas encore ajouté de plat.</div>
+    )
+  }
   return (
     <div className="dishList flex flex-col">
       {menu.map((group, index) => (
