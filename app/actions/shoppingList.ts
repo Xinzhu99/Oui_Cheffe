@@ -8,8 +8,10 @@ import {
   menu,
   shopping_list,
 } from "@/lib/db/schema";
+import { Ingredient } from "@/lib/types/recipes";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { IngredientOfList } from "@/lib/types/menu";
 
 export default async function addToShoppingList() {
   try {
@@ -40,14 +42,16 @@ export default async function addToShoppingList() {
         message: "Ajouter un plat au menu pour créer votre liste",
       };
     }
+
+    console.log("🎄",menuWithIng)
     //fonction pour ajuster les qqt
-    const adjustedMenuWithIng = menuWithIng.map((ing) => {
+    const adjustedMenuWithIng = menuWithIng.map((ing: IngredientOfList) => {
       const adjustedQty = Math.round((ing.quantity / 2) * ing.servings);
 
       return {
-        ingredientId: ing.ingredientId,
-        ingredientName: ing.ingredientName,
-        unit: ing.ingredientUnit,
+        ingredientId: ing.ingredientsId,
+        ingredientName: ing.ingredientsName,
+        unit: ing.ingredientsUnit,
         adjustedQuantity: adjustedQty,
         dishName: ing.dishName,
       };

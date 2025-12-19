@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 
 //function qui permet d'ajouter des ingrédients d'une recette au back table menu
-export async function addToMenu(dishId, servings) {
+export async function addToMenu(dishId: number, servings:number) {
   // console.log("🎅", dishId);
   // console.log("😁", servings);
 
@@ -13,7 +13,7 @@ export async function addToMenu(dishId, servings) {
     const id = await db
       .select()
       .from(menu)
-      .where(eq(menu.dish_id, parseInt(dishId)));
+      .where(eq(menu.dish_id, dishId));
 
     if (id.length !== 0) {
       return {
@@ -45,11 +45,10 @@ export async function addToMenu(dishId, servings) {
 }
 
 //function qui permet de retirer un plat du menu
-
-export async function deleteFromMenu (dishId) {
+export async function deleteFromMenu (dishId:number) {
 
   try {
-    const dish = await db.select().from(menu).where(eq(menu.dish_id, parseInt(dishId)))
+    const dish = await db.select().from(menu).where(eq(menu.dish_id, dishId))
 
     console.log("😁",dish)
     if (dish.length === 0) {
@@ -59,7 +58,7 @@ export async function deleteFromMenu (dishId) {
       })
     }
 
-    await db.delete(menu).where(eq(menu.dish_id, parseInt(dishId)))
+    await db.delete(menu).where(eq(menu.dish_id, dishId))
     revalidatePath("/my-dishes")
 
     return {
@@ -74,5 +73,4 @@ export async function deleteFromMenu (dishId) {
       message:"API erreur"
     }
   }
-
 }

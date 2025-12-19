@@ -1,10 +1,11 @@
 "use client"
 
 import { deleteFromMenu } from "@/app/actions/menu";
+import { DishesByDate } from "@/lib/types/menu";
 
-export default function MenuContent({menu}) {
-
-  const handleClick = async (id) => {
+export default function MenuContent({menu} : {menu: DishesByDate []}) {
+//fonction pour gérer la suppression d'un plat du menu :
+  const handleClick = async (id:number) => {
       await deleteFromMenu(id)
   }
   if (menu.length === 0) {

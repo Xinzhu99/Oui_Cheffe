@@ -1,4 +1,3 @@
-import { ingredients } from "../db/schema"
 
 export type Recipe = {
     dishId: number,
