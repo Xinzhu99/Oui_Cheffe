@@ -14,6 +14,7 @@ import { revalidatePath } from "next/cache";
 import { IngredientOfList } from "@/lib/types/menu";
 
 export default async function addToShoppingList() {
+  const defaulServings = 2
   try {
     const menuWithIng = await db
       .select({
@@ -46,7 +47,7 @@ export default async function addToShoppingList() {
     console.log("🎄",menuWithIng)
     //fonction pour ajuster les qqt
     const adjustedMenuWithIng = menuWithIng.map((ing: IngredientOfList) => {
-      const adjustedQty = Math.round((ing.quantity / 2) * ing.servings);
+      const adjustedQty = Math.round((ing.quantity / defaulServings) * ing.servings);
 
       return {
         ingredientId: ing.ingredientsId,
@@ -57,12 +58,29 @@ export default async function addToShoppingList() {
       };
     });
 
-    // ✅ 3. Insère dans shopping_list
+    //merger les ingrédients répétitifs
+    let mergedList = [] ;
+      console.log("🎅",adjustedMenuWithIng)
+      adjustedMenuWithIng.forEach((ing) => {
+        const obj = mergedList.find(
+          (o) => o.ingredientId === ing.ingredientId
+        );
+        if (obj) {
+          obj.quantity =
+            obj.adjustedQuantity + ing.adjustedQuantity;
+        } else {
+          mergedList.push(ing);
+        }
+      });
+
+
+
+    // ✅ Insère dans shopping_list
     // Vide la liste précédente
     await db.delete(shopping_list);
 
     // Insère chaque ingrédient
-    for (const ing of adjustedMenuWithIng) {
+    for (const ing of mergedList) {
       await db.insert(shopping_list).values({
         ingredient_id: ing.ingredientId,
         quantity: ing.adjustedQuantity.toFixed(2),
@@ -74,7 +92,7 @@ export default async function addToShoppingList() {
 
     return {
       sucess: true,
-      message: `✅ Liste créée avec ${adjustedMenuWithIng.length} ingrédients !`,
+      message: `✅ Liste créée avec ${mergedList.length} ingrédients !`,
     };
   } catch (error) {
     console.error("❌ Erreur:", error);
@@ -82,5 +100,34 @@ export default async function addToShoppingList() {
       success: false,
       message: "Erreur lors de la création",
     };
+  }
+}
+
+export async function deleteFromShoppingList (ingredient_id) {
+  try {
+    const ing = await db.select().from(shopping_list).where(eq(shopping_list.ingredient_id, ingredient_id))
+
+    console.log("😁",ing)
+    if (ing.length === 0) {
+      return ({
+        sucess: false,
+        message: "L'ingredient choisi n'existe pas dans votre liste"
+      })
+    }
+
+    await db.delete(shopping_list).where(eq(shopping_list.ingredient_id, ingredient_id))
+    revalidatePath("/my-list")
+
+    return {
+        success: true,
+        message: "L'ingrédient a été retiré !",
+      };
+
+  } catch (error) {
+    console.error("Having problem of API", error)
+    return {
+      sucess: false,
+      message:"API erreur"
+    }
   }
 }

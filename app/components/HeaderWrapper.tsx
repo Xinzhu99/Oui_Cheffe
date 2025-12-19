@@ -1,5 +1,5 @@
 
-export default function HeaderWrapper ({header, text}) {
+export default function HeaderWrapper ({header, text} : {header: string, text: string }) {
     return(
         <div className="header_wrapper flex flex-col gap-4 p-4 ">
             <h1 className="font-bold text-3xl">{header}</h1>
