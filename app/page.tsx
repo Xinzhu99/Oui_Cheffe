@@ -5,12 +5,13 @@ import HeaderWrapper from "./components/HeaderWrapper";
 import RecipesList from "./components/recipes/RecipesList";
 import CategoryBar from "./components/CategoryBar";
 
-export default async function Home({searchParams}) {
-  
-  // console.log("params", await searchParams.category)
-  const params = await searchParams
-  const category = params.category
-    
+export default async function Home({ searchParams } : {
+  searchParams : { category?: string }
+}) {
+  console.log("params", await searchParams)
+  const params = await searchParams;
+  const category = params.category;
+
   let query = db
     .select({
       dishId: dishes.id,
@@ -20,12 +21,12 @@ export default async function Home({searchParams}) {
     })
     .from(dishes)
     .leftJoin(dish_categories, eq(dish_categories.id, dishes.dish_category_id));
-  if (category
-  ) {
-    query = query.where(eq(dishes.dish_category_id, Number(category)))
-  }
-    const recipes = await query
-  
+  if (category) {
+    const recipes = await query.where(eq(dishes.dish_category_id, Number(category)));
+  } 
+    const recipes = await query;
+
+
   return (
     <div className="flex flex-col ">
       <HeaderWrapper
@@ -33,6 +34,7 @@ export default async function Home({searchParams}) {
         text="Bienvenue à la cuisine de Xinzhu !"
       />
 
+      {/* boutons rapides pour choisir les catégories de plats */}
       <CategoryBar />
 
       {/*liste des recettes */}

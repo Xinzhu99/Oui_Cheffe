@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import getCategories from "../actions/categories";
 import { Dish_Category } from "@/lib/types/categories";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export default function CategoryBar({  }) {
+export default function CategoryBar() {
   //utiliser useRouter pour modifier l'url inside un component client
   const router = useRouter();
   const [categories, setCategories] = useState<Dish_Category[]>([]);
@@ -13,7 +13,7 @@ export default function CategoryBar({  }) {
     getCategories().then(setCategories);
   }, []);
 
-  const handleClick = (id) => {
+  const handleClick = (id: number | null) => {
     if (id === null) {
       router.push("/");
     } else {
