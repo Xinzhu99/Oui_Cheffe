@@ -1,5 +1,5 @@
 import Link from "next/link";
-export default function ShowDishDetails({ id }) {
+export default function ShowDishDetails({ id } : { id : number}) {
   return (
     <Link
       href={`/dish/${id}`}

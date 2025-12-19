@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ShowDishDetails from "../ShowDishDetails";
+import ShowDishDetails from "./ShowDishDetails";
 import { Recipe } from "@/lib/types/recipes";
 
 export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
@@ -10,7 +10,7 @@ export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
           key={recipe.dishId}
           className="recipe-card group relative flex flex-col overflow-hidden rounded-[20px] bg-amber-50 shadow-[0_4px_16px_rgba(45,106,79,0.08)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(45,106,79,0.15)] active:scale-[0.98]"
         >
-          {/* Image Container avec dégradé */}
+          {/* Image Container */}
           <div className="relative h-[200px] flex items-center justify-center overflow-hidden">
             <Image 
               src="/mockup.jpg" 
@@ -20,7 +20,7 @@ export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
               className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
             />
             
-            {/* Badge temps avec backdrop blur */}
+            {/* Badge temps */}
             {recipe.time && (
               <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-amber-50 px-3.5 py-2 text-sm font-semibold text-orange-400 shadow-lg backdrop-blur-sm">
                 <span>⏱</span>
@@ -43,8 +43,6 @@ export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
               {recipe.dishName}
             </h3>
 
-
-            
               <ShowDishDetails id={recipe.dishId} />
           
           </div>

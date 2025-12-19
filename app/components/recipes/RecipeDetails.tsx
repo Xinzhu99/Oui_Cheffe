@@ -1,21 +1,24 @@
 "use client";
 import { useState } from "react";
-import { addToMenu } from "../actions/menu";
+import { addToMenu } from "../../actions/menu";
 import Image from "next/image";
+import { Recipe } from "@/lib/types/recipes";
 
-export default function DishDetailsClient({ recipe }) {
+export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
   const defaultServings = 2;
   const [servings, setServings] = useState(defaultServings);
-  const [message, setMessage] = useState<{success: boolean, message: string} | null >(null);
-  
-  
+  const [message, setMessage] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+
   //fonction permettant d'actualiser les quantité d'ingrédients
   const ajustedQty = (defaultQty: number) => {
     return Math.round((defaultQty / defaultServings) * servings);
   };
 
   //fonction pour gérér le click bouton : appel d'action et recevoir le retour message
-  const handleClick = async (id, servings) => {
+  const handleClick = async (servings : number) => {
     const result = await addToMenu(recipe.dishId, servings);
     setMessage(result);
   };
@@ -87,7 +90,7 @@ export default function DishDetailsClient({ recipe }) {
       <div className="flex flex-col">
         {/*partie liste des ingrédients */}
         <ul className="m-4 ">
-          {recipe.ingredients.map((ingredient: any) => (
+          {recipe.ingredients.map((ingredient) => (
             <li
               key={ingredient.id}
               className="bg-white rounded-2xl my-2 p-4 shadow flex"
@@ -108,9 +111,9 @@ export default function DishDetailsClient({ recipe }) {
         </div>
 
         <button
-        disabled={message?.success}
+          disabled={message?.success}
           type="submit"
-          onClick={() => handleClick(recipe.dishId, servings)}
+          onClick={() => handleClick(servings)}
           className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
         >
           Ajouter à ma liste

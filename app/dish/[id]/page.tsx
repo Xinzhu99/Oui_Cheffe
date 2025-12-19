@@ -1,9 +1,11 @@
-import DishDetailsClient from "@/app/components/DishDetailsClient";
+import RecipeDetails from "@/app/components/recipes/RecipeDetails";
 import { db } from "@/lib/db/drizzle";
 import { dish_ingredients, dishes, ingredients } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
-export default async function DishDetails({ params }) {
+export default async function DishDetails({ params }:{
+  params : {id : string}
+}) {
   const { id } = await params;
   // console.log("id", id)
 
@@ -47,6 +49,6 @@ export default async function DishDetails({ params }) {
 // console.log("recipeCOnsolidé", recipe);
   
   return (
-    <DishDetailsClient recipe={recipe} />
+    <RecipeDetails recipe={recipe} />
   );
 }
