@@ -116,7 +116,7 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
           onClick={() => handleClick(servings)}
           className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
         >
-          Ajouter à ma liste
+          Ajouter au menu
         </button>
       </div>
     </div>

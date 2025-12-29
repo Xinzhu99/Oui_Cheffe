@@ -20,7 +20,7 @@ export const ingredient_categories = pgTable("ingredient_categories", {
 export const ingredients = pgTable("ingredients", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  unit: text("unit").notNull(), 
+  unit: text("unit"), 
   ingredient_category_id: integer("ingredient_category_id").references(() => ingredient_categories.id, { onDelete: "set null" }),
   created_at: timestamp("created_at").defaultNow(),
 })
@@ -61,7 +61,7 @@ export const menu = pgTable("menu", {
 export const shopping_list = pgTable("shopping_list", {
   id: serial("id").primaryKey(),
   ingredient_id: integer("ingredient_id").notNull().references(() => ingredients.id, { onDelete: "cascade" }),
-  quantity: decimal("quantity", { precision: 10, scale: 2 }).notNull(),
+  quantity: decimal("quantity", { precision: 10, scale: 2 }),
   source: text("source", { enum: ["recipe", "manual"] }).notNull().default("recipe"),
   is_checked: boolean("is_checked").notNull().default(false),
   created_at: timestamp("created_at").defaultNow(),
