@@ -3,19 +3,22 @@ import { useState } from "react";
 import { addToMenu } from "../../actions/menu";
 import Image from "next/image";
 
-export default function RecipeDetails({ recipe }: { 
+export default function RecipeDetails({
+  recipe,
+}: {
   recipe: {
-    dishId: number
-    dishName: string
-    prepTime: number | null
-    instructions: string | null
+    dishId: number;
+    dishName: string;
+    prepTime: number | null;
+    instructions: string | null;
     ingredients: Array<{
-      id: number
-      name: string
-      unit: string
-      quantity: string
-    }>
-  }}) {
+      id: number;
+      name: string;
+      unit: string;
+      quantity: string;
+    }>;
+  };
+}) {
   const defaultServings = 2;
   const [servings, setServings] = useState(defaultServings);
   const [message, setMessage] = useState<{
@@ -29,7 +32,7 @@ export default function RecipeDetails({ recipe }: {
   };
 
   //fonction pour gérér le click bouton : appel d'action et recevoir le retour message
-  const handleClick = async (servings : number) => {
+  const handleClick = async (servings: number) => {
     const result = await addToMenu(recipe.dishId, servings);
     setMessage(result);
   };
@@ -47,18 +50,6 @@ export default function RecipeDetails({ recipe }: {
         />
       </div>
 
-      {/* partie message */}
-      {message && (
-        <div
-          className={`m-4 p-4 rounded-2xl text-center font-bold ${
-            message.success
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-          }`}
-        >
-          {message.message}
-        </div>
-      )}
       {/* partie tite et prep time */}
       <div className="flex flex-col p-4 m-4 gap-4 border-b-2 border-gray-300">
         <h1 className="text-3xl text-orange-400">{recipe.dishName}</h1>
@@ -121,14 +112,26 @@ export default function RecipeDetails({ recipe }: {
           <p>{recipe.instructions}</p>
         </div>
 
-        <button
-          disabled={message?.success}
-          type="submit"
-          onClick={() => handleClick(servings)}
-          className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
-        >
-          Ajouter au menu
-        </button>
+        <div className="stickyContainer sticky bottom-2 flex flex-col rounded-2xl bg-white">
+          <button
+            disabled={message?.success}
+            type="submit"
+            onClick={() => handleClick(servings)}
+            className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl cursor-pointer"
+          >
+            Ajouter au menu
+          </button>
+          {/* partie message */}
+          {message && (
+            <div
+              className={` rounded-2xl text-center font-bold ${
+                message.success ? "text-green-800" : " text-red-800"
+              }`}
+            >
+              {message.message}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
