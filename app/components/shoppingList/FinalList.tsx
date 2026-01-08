@@ -1,50 +1,48 @@
-"use client"
-import { useState } from "react"
-import { abandonList } from "@/app/actions/shoppingList"
-import AbandonList from "./AbandonList"
-import FinishList from "./FinishList"
+"use client";
+import { useState } from "react";
+import { abandonList } from "@/app/actions/shoppingList";
+import AbandonList from "./AbandonList";
+import FinishList from "./FinishList";
 
 type Item = {
-  id: number
-  ingredientName: string | null
-  quantity: string | null
-  unit: string | null
-  isChecked: boolean
-}
+  id: number;
+  ingredientName: string | null;
+  quantity: string | null;
+  unit: string | null;
+  isChecked: boolean;
+};
 
 export default function FinalListClient({ items }: { items: Item[] }) {
   const [checkedItems, setCheckedItems] = useState<number[]>(
     items.filter((item) => item.isChecked).map((item) => item.id)
-  )
-  const [isLoading, setIsLoading] = useState(false)
+  );
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleItem = (id: number) => {
     setCheckedItems((prev) =>
-      prev.includes(id)
-        ? prev.filter((itemId) => itemId !== id)
-        : [...prev, id]
-    )
-  }
+      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
+    );
+  };
 
   const handleFinish = async () => {
     const confirmed = window.confirm(
       "✅ Avez-vous terminé vos courses ?\n\nLa liste sera supprimée."
-    )
-    if (!confirmed) return
+    );
+    if (!confirmed) return;
 
-    setIsLoading(true)
-    await abandonList()
-  }
+    setIsLoading(true);
+    await abandonList();
+  };
 
   const handleAbandon = async () => {
     const confirmed = window.confirm(
       "⚠️ Êtes-vous sûr de vouloir abandonner cette liste ?"
-    )
-    if (!confirmed) return
+    );
+    if (!confirmed) return;
 
-    setIsLoading(true)
-    await abandonList()
-  }
+    setIsLoading(true);
+    await abandonList();
+  };
 
   return (
     <div className="relative pb-40">
@@ -61,7 +59,7 @@ export default function FinalListClient({ items }: { items: Item[] }) {
       {/* Liste des articles */}
       <div className="p-4 space-y-3">
         {items.map((item) => {
-          const isChecked = checkedItems.includes(item.id)
+          const isChecked = checkedItems.includes(item.id);
 
           return (
             <div
@@ -70,9 +68,10 @@ export default function FinalListClient({ items }: { items: Item[] }) {
               className={`
                 flex items-center gap-4 p-4 rounded-2xl cursor-pointer
                 transition-all duration-300
-                ${isChecked 
-                  ? 'bg-gray-100 opacity-60' 
-                  : 'bg-white shadow-md hover:shadow-lg'
+                ${
+                  isChecked
+                    ? "bg-gray-100 opacity-60"
+                    : "bg-white shadow-md hover:shadow-lg"
                 }
               `}
             >
@@ -81,15 +80,14 @@ export default function FinalListClient({ items }: { items: Item[] }) {
                 className={`
                   w-7 h-7 rounded-lg border-3 flex items-center justify-center
                   transition-all
-                  ${isChecked 
-                    ? 'bg-green-500 border-green-500' 
-                    : 'bg-white border-gray-300'
+                  ${
+                    isChecked
+                      ? "bg-green-500 border-green-500"
+                      : "bg-white border-gray-300"
                   }
                 `}
               >
-                {isChecked && (
-                  <span className="text-white font-bold">✓</span>
-                )}
+                {isChecked && <span className="text-white font-bold">✓</span>}
               </div>
 
               {/* Info */}
@@ -97,7 +95,9 @@ export default function FinalListClient({ items }: { items: Item[] }) {
                 <p
                   className={`
                     font-semibold
-                    ${isChecked ? 'line-through text-gray-500' : 'text-gray-800'}
+                    ${
+                      isChecked ? "line-through text-gray-500" : "text-gray-800"
+                    }
                   `}
                 >
                   {item.ingredientName}
@@ -109,18 +109,17 @@ export default function FinalListClient({ items }: { items: Item[] }) {
                 )}
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
       {/* ✅ Boutons avec le MÊME style que /my-list */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white p-4">
+      <div className="stickyContainer flex flex-col fixed bottom-0 left-0 right-0 bg-white p-4 gap-2">
         {/* Bouton "J'ai terminé mes courses" - Style "Finaliser ma liste" */}
-       <FinishList />
-
+        <FinishList />
         {/* Bouton "Abandonner" - Style identique */}
         <AbandonList />
       </div>
     </div>
-  )
+  );
 }

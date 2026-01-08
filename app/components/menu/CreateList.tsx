@@ -17,7 +17,7 @@ const handleClick = async  () => {
      }, 1000)
   };
   return (
-    <div>
+    <div className="stickyContainer flex flex-col fixed bottom-0 left-0 right-0 bg-white p-4 gap-2">
       {/* partie message */}
       {message && (
         <div
@@ -32,7 +32,7 @@ const handleClick = async  () => {
       )}
       <button
         onClick={()=>handleClick()}
-        className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
+        className="bg-orange-400 p-2 w-full text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
       >
         Créer ma liste
       </button>

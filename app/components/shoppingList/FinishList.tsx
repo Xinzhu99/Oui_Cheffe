@@ -23,7 +23,7 @@ export default function FinishList() {
       onClick={handleClick}
       disabled={isLoading}
       className={`
-        p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 
+        p-2 text-white font-extrabold rounded-2xl sticky bottom-2 
         transition-all
         ${isLoading 
           ? 'bg-gray-400 cursor-not-allowed' 
@@ -31,7 +31,7 @@ export default function FinishList() {
         }
       `}
     >
-      {isLoading ? "⏳ Suppression..." : "✅ J'ai terminé mes courses"}
+      {isLoading ? "⏳ Suppression..." : "J'ai terminé mes courses"}
     </button>
   )
 }

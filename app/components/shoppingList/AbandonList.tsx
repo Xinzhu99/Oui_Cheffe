@@ -23,7 +23,7 @@ export default function AbandonList() {
       onClick={handleClick}
       disabled={isLoading}
       className={`
-        p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 
+        p-2 text-white font-extrabold rounded-2xl w-full
         transition-all
         ${isLoading 
           ? 'bg-gray-400 cursor-not-allowed' 
@@ -31,7 +31,7 @@ export default function AbandonList() {
         }
       `}
     >
-      {isLoading ? "⏳ Suppression..." : "🗑️ Abandonner"}
+      {isLoading ? "⏳ Suppression..." : "Abandonner"}
     </button>
   )
 }
