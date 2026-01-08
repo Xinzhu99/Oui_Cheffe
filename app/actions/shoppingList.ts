@@ -46,7 +46,7 @@ export default async function addToShoppingList() {
     // Ajuste les quantités
     const adjustedMenuWithIng = menuWithIng.map((ing: IngredientOfList) => {
       const adjustedQty = Math.round(
-        (parseFloat(ing.quantity) / DEFAULT_SERVINGS) * ing.servings
+        (Number(ing.quantity) / DEFAULT_SERVINGS) * ing.servings
       )
 
       return {
@@ -77,7 +77,7 @@ export default async function addToShoppingList() {
     // Insère les ingrédients
     for (const ing of mergedList) {
       await db.insert(shopping_list).values({
-        ingredient_id: ing.ingredientId,
+        ingredient_id: Number(ing.ingredientId),
         quantity: ing.adjustedQuantity.toFixed(2),
         source: "recipe",
         is_checked: false,

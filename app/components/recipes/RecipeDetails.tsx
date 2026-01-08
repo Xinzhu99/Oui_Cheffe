@@ -2,9 +2,20 @@
 import { useState } from "react";
 import { addToMenu } from "../../actions/menu";
 import Image from "next/image";
-import { Recipe } from "@/lib/types/recipes";
 
-export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
+export default function RecipeDetails({ recipe }: { 
+  recipe: {
+    dishId: number
+    dishName: string
+    prepTime: number | null
+    instructions: string | null
+    ingredients: Array<{
+      id: number
+      name: string
+      unit: string
+      quantity: string
+    }>
+  }}) {
   const defaultServings = 2;
   const [servings, setServings] = useState(defaultServings);
   const [message, setMessage] = useState<{
@@ -99,7 +110,7 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
                 {ingredient.name}{" "}
               </span>
               <span className="ml-auto">
-                {ajustedQty(ingredient.quantity)} {ingredient.unit}
+                {ajustedQty(Number(ingredient.quantity))} {ingredient.unit}
               </span>
             </li>
           ))}

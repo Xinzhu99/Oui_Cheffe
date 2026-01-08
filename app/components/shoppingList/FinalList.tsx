@@ -7,7 +7,7 @@ import FinishList from "./FinishList"
 type Item = {
   id: number
   ingredientName: string | null
-  quantity: string
+  quantity: string | null
   unit: string | null
   isChecked: boolean
 }

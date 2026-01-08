@@ -14,7 +14,7 @@ const handleClick = async  () => {
     
      setTimeout(()=> {
        redirect("/my-list")
-     }, "1000")
+     }, 1000)
   };
   return (
     <div>

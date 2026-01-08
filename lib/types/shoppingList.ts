@@ -10,7 +10,7 @@ export type shoppingListItem = {
     };
     ingredients: {
         id: number;
-        name: string;
+        name: string | null;
         unit: string;
         ingredient_category_id: number | null;
         created_at: Date | null;

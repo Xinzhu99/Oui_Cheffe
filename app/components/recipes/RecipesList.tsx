@@ -2,7 +2,12 @@ import Image from "next/image";
 import ShowDishDetails from "./ShowDishDetails";
 import { Recipe } from "@/lib/types/recipes";
 
-export default function RecipesList({ recipes }: { recipes: Recipe[] }) {
+export default function RecipesList({ recipes }: { recipes: Array<{
+    dishId: number
+    dishName: string
+    time: number | null
+    dishCat: string | null
+  }> }) {
   return (
     <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-2 lg:grid-cols-3">
       {recipes.map((recipe) => (

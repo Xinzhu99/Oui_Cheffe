@@ -1,6 +1,7 @@
 import "./globals.css";
 import Link from "next/link";
 import { Roboto } from 'next/font/google'
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "OuiCheffe",
