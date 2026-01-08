@@ -1,5 +1,4 @@
 import Image from "next/image";
-import ShowDishDetails from "./ShowDishDetails";
 import { Recipe } from "@/lib/types/recipes";
 import Link from "next/link";
 

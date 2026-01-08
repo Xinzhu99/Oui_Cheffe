@@ -112,7 +112,7 @@ export default function RecipeDetails({
           <p>{recipe.instructions}</p>
         </div>
 
-        <div className="stickyContainer sticky bottom-2 flex flex-col rounded-2xl bg-white">
+        <div className="stickyContainer sticky bottom-20 flex flex-col rounded-2xl bg-white">
           <button
             disabled={message?.success}
             type="submit"

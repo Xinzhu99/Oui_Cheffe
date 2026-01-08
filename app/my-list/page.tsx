@@ -56,7 +56,7 @@ export default async function MyList() {
       <ManualAdd />
       <ShoppingList listByIngredient={listFromManual} />
 
-      <div className="stickyContainer flex flex-col fixed bottom-0 left-0 right-0 bg-white p-4 gap-2" >
+      <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2" >
         {(listFromRecipe.length > 0 || listFromManual.length > 0) && (
             <Link href="/my-list/final">
               <button className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors">

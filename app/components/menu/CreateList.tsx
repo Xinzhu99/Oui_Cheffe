@@ -17,7 +17,7 @@ const handleClick = async  () => {
      }, 1000)
   };
   return (
-    <div className="stickyContainer flex flex-col fixed bottom-0 left-0 right-0 bg-white p-4 gap-2">
+    <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2">
       {/* partie message */}
       {message && (
         <div

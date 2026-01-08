@@ -113,8 +113,7 @@ export default function FinalListClient({ items }: { items: Item[] }) {
         })}
       </div>
 
-      {/* ✅ Boutons avec le MÊME style que /my-list */}
-      <div className="stickyContainer flex flex-col fixed bottom-0 left-0 right-0 bg-white p-4 gap-2">
+      <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2">
         {/* Bouton "J'ai terminé mes courses" - Style "Finaliser ma liste" */}
         <FinishList />
         {/* Bouton "Abandonner" - Style identique */}
