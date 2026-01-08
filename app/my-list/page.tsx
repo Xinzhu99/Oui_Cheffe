@@ -4,6 +4,8 @@ import HeaderWrapper from "../components/HeaderWrapper";
 import ShoppingList from "../components/shoppingList/ShoppingList";
 import { eq } from "drizzle-orm";
 import ManualAdd from "../components/shoppingList/ManualAdd";
+import AbandonList from "../components/shoppingList/AbandonList";
+import Link from "next/link";
 
 export default async function MyList() {
   const listFromRecipe = await db
@@ -32,18 +34,17 @@ export default async function MyList() {
         🛒Ajoutés manuellement
       </div>
       {/* barre de recherche  */}
-      
+
       <ManualAdd />
 
       <ShoppingList listByIngredient={listFromManual} />
 
-      <button className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer">
-        Finaliser ma liste
-      </button>
-
-      <button className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer">
-        Abandonner
-      </button>
+      <Link href="/my-list/final">
+        <button className="bg-orange-400 p-2 m-4 text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer">
+          Finaliser ma liste
+        </button>
+      </Link>
+      <AbandonList />
     </div>
   );
 }

@@ -1,21 +1,24 @@
-"use server";
+"use server"
 
-import { db } from "@/lib/db/drizzle";
+import { db } from "@/lib/db/drizzle"
 import {
   dish_ingredients,
   dishes,
   ingredients,
-  ingredientsRelations,
   menu,
   shopping_list,
-} from "@/lib/db/schema";
-import { Ingredient } from "@/lib/types/recipes";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { IngredientOfList } from "@/lib/types/menu";
+} from "@/lib/db/schema"
+import { eq } from "drizzle-orm"
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+import { IngredientOfList } from "@/lib/types/menu"
 
+const DEFAULT_SERVINGS = 2
+
+// ==========================================
+// Créer la liste depuis le menu
+// ==========================================
 export default async function addToShoppingList() {
-  const defaulServings = 2;
   try {
     const menuWithIng = await db
       .select({
@@ -23,8 +26,6 @@ export default async function addToShoppingList() {
         servings: menu.servings,
         dishId: menu.dish_id,
         dishName: dishes.name,
-
-        //liste des ingrédients
         ingredientsId: ingredients.id,
         quantity: dish_ingredients.quantity,
         ingredientsName: ingredients.name,
@@ -33,24 +34,20 @@ export default async function addToShoppingList() {
       .from(menu)
       .leftJoin(dishes, eq(menu.dish_id, dishes.id))
       .leftJoin(dish_ingredients, eq(dishes.id, dish_ingredients.dish_id))
-      .leftJoin(
-        ingredients,
-        eq(dish_ingredients.ingredient_id, ingredients.id)
-      );
+      .leftJoin(ingredients, eq(dish_ingredients.ingredient_id, ingredients.id))
 
     if (menuWithIng.length === 0) {
       return {
         success: false,
-        message: "Ajouter un plat au menu pour créer votre liste",
-      };
+        message: "Ajoutez des plats au menu pour créer votre liste",
+      }
     }
 
-    console.log("🎄", menuWithIng);
-    //fonction pour ajuster les qqt
+    // Ajuste les quantités
     const adjustedMenuWithIng = menuWithIng.map((ing: IngredientOfList) => {
       const adjustedQty = Math.round(
-        (ing.quantity / defaulServings) * ing.servings
-      );
+        (parseFloat(ing.quantity) / DEFAULT_SERVINGS) * ing.servings
+      )
 
       return {
         ingredientId: ing.ingredientsId,
@@ -58,153 +55,175 @@ export default async function addToShoppingList() {
         unit: ing.ingredientsUnit,
         adjustedQuantity: adjustedQty,
         dishName: ing.dishName,
-      };
-    });
-
-    //merger les ingrédients répétitifs
-    let mergedList = [];
-    console.log("🎅", adjustedMenuWithIng);
-    adjustedMenuWithIng.forEach((ing) => {
-      const obj = mergedList.find((o) => o.ingredientId === ing.ingredientId);
-      if (obj) {
-        obj.quantity = obj.adjustedQuantity + ing.adjustedQuantity;
-      } else {
-        mergedList.push(ing);
       }
-    });
+    })
 
-    // ✅ Insère dans shopping_list
+    // Groupe les ingrédients identiques
+    const mergedList = adjustedMenuWithIng.reduce((acc, ing) => {
+      const existing = acc.find((item) => item.ingredientId === ing.ingredientId)
+
+      if (existing) {
+        existing.adjustedQuantity += ing.adjustedQuantity
+      } else {
+        acc.push({ ...ing })
+      }
+
+      return acc
+    }, [] as typeof adjustedMenuWithIng)
+
     // Vide la liste précédente
-    await db.delete(shopping_list);
+    await db.delete(shopping_list)
 
-    // Insère chaque ingrédient
+    // Insère les ingrédients
     for (const ing of mergedList) {
       await db.insert(shopping_list).values({
         ingredient_id: ing.ingredientId,
         quantity: ing.adjustedQuantity.toFixed(2),
         source: "recipe",
         is_checked: false,
-      });
+      })
     }
-    revalidatePath("/my-list");
+
+    revalidatePath("/my-list")
 
     return {
-      sucess: true,
+      success: true,  // ✅ Corrigé
       message: `✅ Liste créée avec ${mergedList.length} ingrédients !`,
-    };
+    }
   } catch (error) {
-    console.error("❌ Erreur:", error);
+    console.error("❌ Erreur addToShoppingList:", error)
     return {
       success: false,
       message: "Erreur lors de la création",
-    };
+    }
   }
 }
 
-export async function deleteFromShoppingList(ingredient_id) {
+// ==========================================
+// Supprimer un ingrédient
+// ==========================================
+export async function deleteFromShoppingList(
+  ingredient_id: number
+): Promise<{ success: boolean; message: string }> {
   try {
-    const ing = await db
-      .select()
-      .from(shopping_list)
-      .where(eq(shopping_list.ingredient_id, ingredient_id));
+    const result = await db
+      .delete(shopping_list)
+      .where(eq(shopping_list.ingredient_id, ingredient_id))
+      .returning()
 
-    console.log("😁", ing);
-    if (ing.length === 0) {
+    if (result.length === 0) {
       return {
-        sucess: false,
-        message: "L'ingredient choisi n'existe pas dans votre liste",
-      };
+        success: false,
+        message: "Ingrédient introuvable",
+      }
     }
 
-    await db
-      .delete(shopping_list)
-      .where(eq(shopping_list.ingredient_id, ingredient_id));
-    revalidatePath("/my-list");
+    revalidatePath("/my-list")
 
     return {
       success: true,
-      message: "L'ingrédient a été retiré !",
-    };
+      message: "✅ Ingrédient retiré !",
+    }
   } catch (error) {
-    console.error("Having problem of API", error);
+    console.error("❌ Erreur deleteFromShoppingList:", error)
     return {
-      sucess: false,
-      message: "API erreur",
-    };
+      success: false,
+      message: "Erreur lors de la suppression",
+    }
   }
 }
 
+// ==========================================
+// Ajouter manuellement un article
+// ==========================================
 export async function addToShoppingListManually(
   item: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    
-    //valid input
-    const trimmedItem = item.trim();
+    const trimmedItem = item.trim()
 
     if (trimmedItem === "") {
       return {
         success: false,
         message: "L'article ne peut pas être vide.",
-      };
+      }
     }
 
-    //formater le input
+    // Formate le nom
     const formattedName =
-      trimmedItem.toLowerCase().charAt(0).toUpperCase() +
-      trimmedItem.toLocaleLowerCase().slice(1).toLowerCase();
-      
-    //vérifier si l'ingrédient existe
+      trimmedItem.charAt(0).toUpperCase() + trimmedItem.slice(1).toLowerCase()
+
+    // Cherche l'ingrédient
     const existingIngredient = await db
       .select({ id: ingredients.id })
       .from(ingredients)
-      .where(eq(ingredients.name, formattedName));
+      .where(eq(ingredients.name, formattedName))
 
-      let ingredientId: number
+    let ingredientId: number
 
-    //créer l'ingrédient s'il existe pas
     if (existingIngredient.length === 0) {
+      // ✅ Crée l'ingrédient avec unit
       const newIngredient = await db
         .insert(ingredients)
-        .values({ name: formattedName })
-        .returning();
-        
-        ingredientId = newIngredient[0].id
+        .values({
+          name: formattedName,
+          unit: "unité(s)",  // ← Ajouté
+        })
+        .returning({ id: ingredients.id })
+
+      ingredientId = newIngredient[0].id
     } else {
-      //sinon prend le id qui existe
       ingredientId = existingIngredient[0].id
     }
-     //vérifier si déjà dans la shopping list 
-     const alredyInLIst = await db
-     .select()
-     .from(shopping_list)
-     .where(eq(shopping_list.ingredient_id, ingredientId))
-    
-     if(alredyInLIst.length > 0) {
+
+    // Vérifie si déjà dans la liste
+    const alreadyInList = await db
+      .select()
+      .from(shopping_list)
+      .where(eq(shopping_list.ingredient_id, ingredientId))
+
+    if (alreadyInList.length > 0) {
       return {
         success: false,
-        message: "Cet article est déjà dans votre liste."
+        message: "Cet article est déjà dans votre liste.",
       }
-     }
+    }
 
-     //ajouter dans la shopping list
-     await db.insert(shopping_list).values({
-      ingredient_id:ingredientId,
-      source: "manual"
-     })
+    // ✅ Ajoute avec quantity
+    await db.insert(shopping_list).values({
+      ingredient_id: ingredientId,
+      quantity: "1",  // ← Ajouté
+      source: "manual",
+      is_checked: false,
+    })
 
-     revalidatePath("/my-list")
+    revalidatePath("/my-list")
 
-     return {
+    return {
       success: true,
-      message: "Artcile ajouté à votre liste !"
-     }
-    
+      message: "✅ Article ajouté à votre liste !",
+    }
   } catch (error) {
-    console.error("❌ Erreur:", error);
+    console.error("❌ Erreur addToShoppingListManually:", error)
     return {
       success: false,
       message: "Erreur lors de l'ajout dans la liste",
-    };
+    }
   }
+}
+
+// ==========================================
+// Abandonner la liste
+// ==========================================
+export async function abandonList(): Promise<void> {
+    // ✅ Supprime une seule fois
+    await db.delete(shopping_list)
+
+    // ✅ Revalide les pages
+    revalidatePath("/my-list")
+    revalidatePath("/my-dishes")
+
+    // ✅ Redirige (n'atteint jamais le return après)
+    redirect("/my-dishes")
+ 
 }
