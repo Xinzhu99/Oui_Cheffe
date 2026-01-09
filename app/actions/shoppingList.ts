@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db/drizzle"
 import {
+  customized_items,
   dish_ingredients,
   dishes,
   ingredients,
@@ -138,8 +139,10 @@ export async function deleteFromShoppingList(
 // Abandonner la liste
 // ==========================================
 export async function abandonList(): Promise<void> {
-    // ✅ Supprime une seule fois
+    
     await db.delete(shopping_list)
+    await db.delete(customized_items)
+
 
     // ✅ Revalide les pages
     revalidatePath("/my-list")
