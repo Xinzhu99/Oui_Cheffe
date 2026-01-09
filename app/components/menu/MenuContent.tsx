@@ -2,6 +2,7 @@
 
 import { deleteFromMenu } from "@/app/actions/menu";
 import { DishesByDate } from "@/lib/types/menu";
+import Link from "next/link";
 
 export default function MenuContent({menu} : {menu: DishesByDate []}) {
 //fonction pour gérer la suppression d'un plat du menu :
@@ -22,8 +23,9 @@ export default function MenuContent({menu} : {menu: DishesByDate []}) {
           </h1>
 
           {group.dish.map((dish) => (
-            <div
+            <Link
               key={dish.id}
+              href={`/dish/${dish.id}`}
               className="dishCard bg-white flex justify-between items-center rounded-2xl p-2 shadow"
             >
               <div className="picWrapper rounded-2xl bg-orange-400 w-[64px] h-[64px] flex justify-center items-center shadow">
@@ -40,7 +42,7 @@ export default function MenuContent({menu} : {menu: DishesByDate []}) {
 
               <button className="cursor-pointer" 
               onClick={() => handleClick(dish.id)}>🗑️</button>
-            </div>
+            </Link>
           ))}
         </div>
       ))}
