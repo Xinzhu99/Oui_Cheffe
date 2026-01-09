@@ -25,12 +25,12 @@ export default function CustomizedList({
           key={item.id} 
           className={`
             bg-white p-4 rounded-2xl shadow
-            ${item.isChecked ? 'opacity-50' : ''}
+            ${item.is_checked ? 'opacity-50' : ''}
           `}
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className={`text-[15px] font-bold ${item.isChecked ? 'line-through' : ''}`}>
+              <h1 className={`text-[15px] font-bold ${item.is_checked ? 'line-through' : ''}`}>
                 {item.name}
               </h1>
             </div>

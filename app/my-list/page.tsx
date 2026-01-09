@@ -18,7 +18,7 @@ export default async function MyList() {
     .select()
     .from(customized_items)
 
-    console.log("xxxxxxxxxxxxxx",customizedData)
+    // console.log("xxxxxxxxxxxxxx",customizedData)
 
   // ✅ Transforme avec valeur par défaut pour null
   const listFromRecipe = listFromRecipeRaw.map((item) => ({

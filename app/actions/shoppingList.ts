@@ -79,7 +79,6 @@ export default async function addToShoppingList() {
       await db.insert(shopping_list).values({
         ingredient_id: Number(ing.ingredientId),
         quantity: ing.adjustedQuantity.toFixed(2),
-        source: "recipe",
         is_checked: false,
       })
     }
@@ -133,84 +132,7 @@ export async function deleteFromShoppingList(
   }
 }
 
-// ==========================================
-// Ajouter manuellement un article
-// ==========================================
-export async function addToShoppingListManually(
-  item: string
-): Promise<{ success: boolean; message: string }> {
-  try {
-    const trimmedItem = item.trim()
 
-    if (trimmedItem === "") {
-      return {
-        success: false,
-        message: "L'article ne peut pas être vide.",
-      }
-    }
-
-    // Formate le nom
-    const formattedName =
-      trimmedItem.charAt(0).toUpperCase() + trimmedItem.slice(1).toLowerCase()
-
-    // Cherche l'ingrédient
-    const existingIngredient = await db
-      .select({ id: ingredients.id })
-      .from(ingredients)
-      .where(eq(ingredients.name, formattedName))
-
-    let ingredientId: number
-
-    if (existingIngredient.length === 0) {
-      // ✅ Crée l'ingrédient avec unit
-      const newIngredient = await db
-        .insert(ingredients)
-        .values({
-          name: formattedName,
-          unit: "unité(s)",  // ← Ajouté
-        })
-        .returning({ id: ingredients.id })
-
-      ingredientId = newIngredient[0].id
-    } else {
-      ingredientId = existingIngredient[0].id
-    }
-
-    // Vérifie si déjà dans la liste
-    const alreadyInList = await db
-      .select()
-      .from(shopping_list)
-      .where(eq(shopping_list.ingredient_id, ingredientId))
-
-    if (alreadyInList.length > 0) {
-      return {
-        success: false,
-        message: "Cet article est déjà dans votre liste.",
-      }
-    }
-
-    // ✅ Ajoute avec quantity
-    await db.insert(shopping_list).values({
-      ingredient_id: ingredientId,
-      quantity: "1",  // ← Ajouté
-      source: "manual",
-      is_checked: false,
-    })
-
-    revalidatePath("/my-list")
-
-    return {
-      success: true,
-      message: "✅ Article ajouté à votre liste !",
-    }
-  } catch (error) {
-    console.error("❌ Erreur addToShoppingListManually:", error)
-    return {
-      success: false,
-      message: "Erreur lors de l'ajout dans la liste",
-    }
-  }
-}
 
 // ==========================================
 // Abandonner la liste

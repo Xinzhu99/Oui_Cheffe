@@ -1,5 +1,5 @@
 "use client"
-import { addToShoppingListManually } from "@/app/actions/shoppingList";
+import { addToCustomized } from "@/app/actions/customized";
 import { useState } from "react";
 
 export default function ManualAdd() {
@@ -7,7 +7,7 @@ export default function ManualAdd() {
     const [message, setMessage] = useState("")
     
     const handleClick= async()=> {
-        const result = await addToShoppingListManually(input)
+        const result = await addToCustomized(input)
         setMessage(result.message)
         setInput("")
     }
