@@ -28,7 +28,7 @@ export default async function MyDishes() {
       <HeaderWrapper header="Mon menu" text="Vos plats à cuisiner" />
 
       <MenuContent menu={menuArr} />
-      <CreateList />
+      {menuArr.length >0 &&<CreateList />}
     </div>
   );
 }

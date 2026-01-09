@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1763751746267,
-      "tag": "0000_wild_lila_cheney",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1763919519913,
-      "tag": "0001_wooden_luke_cage",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1763919751648,
-      "tag": "0002_talented_hobgoblin",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1764930622353,
-      "tag": "0003_closed_longshot",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1765546785791,
-      "tag": "0004_smiling_jimmy_woo",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1766853000469,
-      "tag": "0005_amusing_susan_delgado",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1766854146899,
-      "tag": "0006_harsh_eternity",
+      "when": 1767965066055,
+      "tag": "0000_groovy_legion",
       "breakpoints": true
     }
   ]
