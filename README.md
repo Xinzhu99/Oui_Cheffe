@@ -35,7 +35,7 @@ Design pensé pour une utilisation en magasin avec navigation par onglets et mic
 - [x] Modélisation BDD
 - [x] Maquette UI mobile
 - [x] Server Actions (CRUD)
-- [ ] Intégration frontend ↔ backend
+- [x] Intégration frontend ↔ backend
 - [ ] 🚀 Feature IA : génération de recettes à partir de liens vidéos"
 - [ ] Déploiement
 
