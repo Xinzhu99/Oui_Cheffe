@@ -1,15 +1,13 @@
 "use client";
-import { abandonList, addToChecked, checkStatus, removeFromChecked } from "@/app/actions/shoppingList";
+import { addToChecked, checkStatus, removeFromChecked } from "@/app/actions/customized";
 
 type Item = {
-  id: number;
-  ingredientName: string | null;
-  quantity: string | null;
-  unit: string | null;
-  isChecked: boolean;
+  id: number; 
+  name: string; 
+  is_checked: boolean
 };
 
-export default function FinalAutoList({ items }: { items: Item[] }) {
+export default function FinalCustomizedList({ items }: { items: Item[] }) {
   const handleClick = async (id: number) => {
     const data = await checkStatus(id);
     const isChecked = data[0].status
@@ -23,16 +21,8 @@ export default function FinalAutoList({ items }: { items: Item[] }) {
   };
 
   return (
-    <div className="relative">
-      {/* Badge statut */}
-      <div className="p-4">
-        <div className="p-4 bg-green-100 rounded-2xl text-center">
-          <p className="text-green-800 font-bold">✅ Liste finalisée</p>
-          <p className="text-sm text-green-600 mt-1">
-            XXXXXX / {items.length} articles cochés
-          </p>
-        </div>
-      </div>
+    <div className="relative pb-40">
+      
 
       {/* Liste des articles */}
       <div className="p-4 space-y-3">
@@ -47,7 +37,7 @@ export default function FinalAutoList({ items }: { items: Item[] }) {
                 flex items-center gap-4 p-4 rounded-2xl cursor-pointer
                 transition-all duration-300
                 ${
-                  item.isChecked
+                  item.is_checked
                     ? "bg-gray-100 opacity-60"
                     : "bg-white shadow-md hover:shadow-lg"
                 }
@@ -59,13 +49,13 @@ export default function FinalAutoList({ items }: { items: Item[] }) {
                   w-7 h-7 rounded-lg border-3 flex items-center justify-center
                   transition-all
                   ${
-                    item.isChecked
+                    item.is_checked
                       ? "bg-green-500 border-green-500"
                       : "bg-white border-gray-300"
                   }
                 `}
               >
-                {item.isChecked && (
+                {item.is_checked && (
                   <span className="text-white font-bold">✓</span>
                 )}
               </div>
@@ -76,19 +66,15 @@ export default function FinalAutoList({ items }: { items: Item[] }) {
                   className={`
                     font-semibold
                     ${
-                      item.isChecked
+                      item.is_checked
                         ? "line-through text-gray-500"
                         : "text-gray-800"
                     }
                   `}
                 >
-                  {item.ingredientName}
+                  {item.name}
                 </p>
-                {item.quantity && (
-                  <p className="text-sm text-gray-500">
-                    {item.quantity} {item.unit}
-                  </p>
-                )}
+                
               </div>
             </div>
           );

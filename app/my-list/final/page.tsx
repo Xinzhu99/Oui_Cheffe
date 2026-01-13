@@ -6,6 +6,7 @@ import HeaderWrapper from "@/app/components/HeaderWrapper";
 import AbandonList from "@/app/components/shoppingList/AbandonList";
 import FinishList from "@/app/components/shoppingList/FinishList";
 import FinalAutoList from "@/app/components/shoppingList/FinalAutoList";
+import FinalCustomizedList from "@/app/components/customized/FinalCustomizedList";
 
 export default async function FinalListPage() {
   // Récupère tous les articles
@@ -20,12 +21,14 @@ export default async function FinalListPage() {
     .from(shopping_list)
     .leftJoin(ingredients, eq(shopping_list.ingredient_id, ingredients.id));
 
-  const manualList = await db.select().from(customized_items);
+  const customizedList = await db.select().from(customized_items);
+  console.log("manualList", customizedList)
   
   return (
     <div className="flex flex-col">
       <HeaderWrapper header="Ma liste de courses" text="Cochez vos articles" />
       <FinalAutoList items={autoList}/>
+      <FinalCustomizedList items={customizedList} />
 
       <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2">
         {/* Bouton "J'ai terminé mes courses" - Style "Finaliser ma liste" */}

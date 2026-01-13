@@ -84,3 +84,42 @@ export async function deleteFromCustomized(id: number) {
     };
   }
 }
+
+// ==========================================
+// vérifier si un article est checked 
+// ==========================================
+export async function checkStatus(id:number) {
+  const status = await db.select({
+    status:customized_items.is_checked
+  }).from(customized_items)
+  .where(eq(customized_items.id, id))
+  .limit(1)
+
+  return status
+}
+// ==========================================
+// checker un article dans la liste
+// ==========================================
+export async function addToChecked(id:number) {
+  try {
+    await db.update(customized_items).set({is_checked:true}).where(eq(customized_items.id,id))
+
+    revalidatePath("/my-list/final")
+  } catch (error) {
+    console.error("Erreur lors de modification de l'article",error)
+  }
+  
+}
+// ==========================================
+// déchecker un article dans la liste
+// ==========================================
+export async function removeFromChecked(id:number) {
+  try {
+    await db.update(customized_items).set({is_checked:false}).where(eq(customized_items.id,id))
+
+    revalidatePath("/my-list/final")
+  } catch (error) {
+    console.error("Erreur lors de modification de l'article",error)
+  }
+  
+}
