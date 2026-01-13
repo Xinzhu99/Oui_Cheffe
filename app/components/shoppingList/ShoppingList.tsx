@@ -1,5 +1,7 @@
 "use client"
 
+import { deleteFromShoppingList } from "@/app/actions/shoppingList"
+
 export default function ShoppingList({ 
   listByIngredient 
 }: { 
@@ -17,6 +19,10 @@ export default function ShoppingList({
         Aucun article
       </div>
     )
+  }
+
+  const handleClick = async (id:number) => {
+     await deleteFromShoppingList(id)
   }
 
   return (
@@ -38,6 +44,11 @@ export default function ShoppingList({
                 {Math.round(Number(item.quantity))} {item.unit}
               </p>
             </div>
+
+            {/* bouton pour supprimer un plat */}
+
+              <button className="cursor-pointer" 
+              onClick={() => handleClick(item.id)}>🗑️</button>
           </div>
         </div>
       ))}

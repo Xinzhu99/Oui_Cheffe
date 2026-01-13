@@ -8,6 +8,7 @@ export default function MenuContent({menu} : {menu: DishesByDate []}) {
 //fonction pour gérer la suppression d'un plat du menu :
   const handleClick = async (id:number) => {
       await deleteFromMenu(id)
+      
   }
   if (menu.length === 0) {
     return(
@@ -41,7 +42,8 @@ export default function MenuContent({menu} : {menu: DishesByDate []}) {
               {/* bouton pour supprimer un plat */}
 
               <button className="cursor-pointer" 
-              onClick={() => handleClick(dish.id)}>🗑️</button>
+              onClick={() => handleClick(dish.id)}
+              >🗑️</button>
             </Link>
           ))}
         </div>

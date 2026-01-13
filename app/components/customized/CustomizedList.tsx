@@ -1,5 +1,7 @@
 "use client"
 
+import { deleteFromCustomized } from "@/app/actions/customized";
+
 
 export default function CustomizedList({ 
   items 
@@ -13,9 +15,13 @@ export default function CustomizedList({
   if (items.length === 0) {
     return (
       <div className="m-4 p-4 text-gray-500 text-center">
-        Aucun article
+        Vous n'avez pas encore ajouté d'article manuellement.
       </div>
     )
+  }
+
+  const handleClick = async (id:number) => {
+    await deleteFromCustomized(id)
   }
 
   return (
@@ -34,6 +40,10 @@ export default function CustomizedList({
                 {item.name}
               </h1>
             </div>
+            {/* bouton pour supprimer un plat */}
+
+              <button className="cursor-pointer" 
+              onClick={() => handleClick(item.id)}>🗑️</button>
           </div>
         </div>
       ))}

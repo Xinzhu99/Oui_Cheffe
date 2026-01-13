@@ -104,19 +104,26 @@ export default async function addToShoppingList() {
 // ==========================================
 export async function deleteFromShoppingList(
   ingredient_id: number
-): Promise<{ success: boolean; message: string }> {
+) {
   try {
-    const result = await db
-      .delete(shopping_list)
-      .where(eq(shopping_list.ingredient_id, ingredient_id))
-      .returning()
 
-    if (result.length === 0) {
+    const existingIngredient = await db
+    .select()
+    .from(shopping_list)
+    .where(eq(shopping_list.id,ingredient_id))
+
+    console.log("hhhhhhhhhh",existingIngredient)
+
+    if (existingIngredient.length === 0) {
       return {
         success: false,
         message: "Ingrédient introuvable",
       }
+      
     }
+    await db
+      .delete(shopping_list)
+      .where(eq(shopping_list.id, ingredient_id))
 
     revalidatePath("/my-list")
 
@@ -151,4 +158,43 @@ export async function abandonList(): Promise<void> {
     // ✅ Redirige (n'atteint jamais le return après)
     redirect("/my-dishes")
  
+}
+
+// ==========================================
+// vérifier si un article est checked 
+// ==========================================
+export async function checkStatus(id:number) {
+  const status = await db.select({
+    status:shopping_list.is_checked
+  }).from(shopping_list)
+  .where(eq(shopping_list.id, id))
+  .limit(1)
+
+  return status
+}
+// ==========================================
+// checker un article dans la liste
+// ==========================================
+export async function addToChecked(id:number) {
+  try {
+    await db.update(shopping_list).set({is_checked:true}).where(eq(shopping_list.id,id))
+
+    revalidatePath("/my-list/final")
+  } catch (error) {
+    console.error("Erreur lors de modification de l'article",error)
+  }
+  
+}
+// ==========================================
+// déchecker un article dans la liste
+// ==========================================
+export async function removeFromChecked(id:number) {
+  try {
+    await db.update(shopping_list).set({is_checked:false}).where(eq(shopping_list.id,id))
+
+    revalidatePath("/my-list/final")
+  } catch (error) {
+    console.error("Erreur lors de modification de l'article",error)
+  }
+  
 }
