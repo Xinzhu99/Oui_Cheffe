@@ -12,13 +12,11 @@ export default async function MyList() {
   const listFromRecipeRaw = await db
     .select()
     .from(shopping_list)
-    .leftJoin(ingredients, eq(ingredients.id, shopping_list.ingredient_id))
+    .leftJoin(ingredients, eq(ingredients.id, shopping_list.ingredient_id));
 
-  const customizedData = await db
-    .select()
-    .from(customized_items)
+  const customizedData = await db.select().from(customized_items);
 
-    // console.log("xxxxxxxxxxxxxx",customizedData)
+  // console.log("xxxxxxxxxxxxxx",customizedData)
 
   // ✅ Transforme avec valeur par défaut pour null
   const listFromRecipe = listFromRecipeRaw.map((item) => ({
@@ -29,20 +27,14 @@ export default async function MyList() {
     isChecked: item.shopping_list.is_checked,
   }));
 
-
-
   return (
     <div className="pb-32">
       <HeaderWrapper header="Ma liste" text="Vos prochaines courses" />
 
-      {listFromRecipe.length > 0 && (
-        <>
-          <div className="text-[22px] font-bold leading-tight text-orange-400 m-4">
-            🍳 Depuis mes recettes
-          </div>
-          <ShoppingList listByIngredient={listFromRecipe} />
-        </>
-      )}
+      <div className="text-[22px] font-bold leading-tight text-orange-400 m-4">
+        🍳 Depuis mes recettes
+      </div>
+      <ShoppingList listByIngredient={listFromRecipe} />
 
       <div className="text-[22px] font-bold leading-tight text-orange-400 m-4">
         🛒 Ajoutés manuellement
@@ -50,13 +42,13 @@ export default async function MyList() {
       <ManualAdd />
       <CustomizedList items={customizedData} />
 
-      <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2" >
+      <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2">
         {(listFromRecipe.length > 0 || customizedData.length > 0) && (
-            <Link href="/my-list/final">
-              <button className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors">
-                Finaliser ma liste
-              </button>
-            </Link>
+          <Link href="/my-list/final">
+            <button className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors">
+              Finaliser ma liste
+            </button>
+          </Link>
         )}
 
         <AbandonList />

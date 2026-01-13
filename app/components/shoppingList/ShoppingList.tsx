@@ -16,7 +16,7 @@ export default function ShoppingList({
   if (listByIngredient.length === 0) {
     return (
       <div className="m-4 p-4 text-gray-500 text-center">
-        Aucun article
+        Ajoutez les recettes dans votre menu pour créer votre liste automatiquement.
       </div>
     )
   }

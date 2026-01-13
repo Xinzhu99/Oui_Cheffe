@@ -12,13 +12,13 @@ export default function CustomizedList({
     is_checked: boolean;
   }>
 }) {
-  if (items.length === 0) {
-    return (
-      <div className="m-4 p-4 text-gray-500 text-center">
-        Vous n'avez pas encore ajouté d'article manuellement.
-      </div>
-    )
-  }
+  // if (items.length === 0) {
+  //   return (
+  //     <div className="m-4 p-4 text-gray-500 text-center">
+  //       Vous n'avez pas encore ajouté d'article manuellement.
+  //     </div>
+  //   )
+  // }
 
   const handleClick = async (id:number) => {
     await deleteFromCustomized(id)
