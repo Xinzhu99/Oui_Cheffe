@@ -34,7 +34,7 @@ export default async function FinalListPage() {
         {/* Bouton "J'ai terminé mes courses" - Style "Finaliser ma liste" */}
         <FinishList />
         {/* Bouton "Abandonner" - Style identique */}
-        <AbandonList />
+        {/* <AbandonList /> */}
       </div>
     </div>
   );

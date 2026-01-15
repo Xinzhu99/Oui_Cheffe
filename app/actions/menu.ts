@@ -5,72 +5,98 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 
 //function qui permet d'ajouter des ingrédients d'une recette au back table menu
-export async function addToMenu(dishId: number, servings:number) {
-  // console.log("🎅", dishId);
-  // console.log("😁", servings);
-
+export async function addToMenu(dishId: number, servings: number) {
   try {
-    const id = await db
+    // ==========================================
+    // ÉTAPE 1 : Récupérer l'état actuel du menu
+    // ==========================================
+    const menuItems = await db
       .select()
       .from(menu)
-      .where(eq(menu.dish_id, dishId));
 
-    if (id.length !== 0) {
+    // ==========================================
+    // ÉTAPE 2 : Vérifier si le menu est bloqué
+    // ==========================================
+    // Si au moins un item est "locked", on bloque
+    const isLocked = menuItems.some(item => item.status === "locked")
+    
+    if (isLocked) {
       return {
         success: false,
-        message: "Vous avez déjà ajouté ce plat",
-      };
-    } else {
-      await db
-        .insert(menu)
-        .values({
-          servings: servings,
-          dish_id: dishId,
-        })
-        .returning();
-
-      revalidatePath("/my-dishes");
-      return {
-        success: true,
-        message: "Le plat a été ajouté !",
-      };
+        message: "🔒 Vous avez une liste en cours. Pour modifier votre menu, veuillez abandonner la liste actuelle"
+      }
     }
+
+    // ==========================================
+    // ÉTAPE 3 : Vérifier si le plat existe déjà
+    // ==========================================
+    const dishExists = menuItems.some(item => item.dish_id === dishId)
+    
+    if (dishExists) {
+      return {
+        success: false,
+        message: "❌ Vous avez déjà ajouté ce plat"
+      }
+    }
+
+    // ==========================================
+    // ÉTAPE 4 : Tout est OK → Insérer le plat
+    // ==========================================
+    await db
+      .insert(menu)
+      .values({
+        servings: servings,
+        dish_id: dishId,
+        status: "active" // ← Explicit, c'est mieux !
+      })
+
+    revalidatePath("/my-dishes")
+
+    return {
+      success: true,
+      message: "✅ Le plat a été ajouté à votre menu !"
+    }
+
   } catch (error) {
-    console.error("Having problem of API", error);
+    console.error("❌ Erreur addToMenu:", error)
     return {
       success: false,
-      message: "API erreur",
-    };
+      message: "Erreur lors de l'ajout au menu"
+    }
   }
 }
 
 //function qui permet de retirer un plat du menu
-export async function deleteFromMenu (dishId:number) {
-
+export async function deleteFromMenu(dishId: number) {
   try {
-    const dish = await db.select().from(menu).where(eq(menu.dish_id, dishId))
+    const dish = await db.select().from(menu).where(eq(menu.dish_id, dishId));
 
-    console.log("😁",dish)
+    console.log("😁", dish);
     if (dish.length === 0) {
-      return ({
+      return {
         sucess: false,
-        message: "Le plat choisi n'existe pas dans votre menu"
-      })
+        message: "Le plat choisi n'existe pas dans votre menu",
+      };
+    }
+    if(dish[0].status == "locked"){
+      return {
+        success: false,
+        message:"🔒 Vous avez une liste en cours. Pour modifier votre menu, veuillez abandonner la liste actuelle"
+      }
     }
 
-    await db.delete(menu).where(eq(menu.dish_id, dishId))
-    revalidatePath("/my-dishes")
+    await db.delete(menu).where(eq(menu.dish_id, dishId));
+    revalidatePath("/my-dishes");
 
-    return {
-        success: true,
-        message: "Le plat a été retiré !",
-      };
-
+    // return {
+    //   success: true,
+    //   message: "Le plat a été retiré !",
+    // };
   } catch (error) {
-    console.error("Having problem of API", error)
+    console.error("Having problem of API", error);
     return {
       sucess: false,
-      message:"API erreur"
-    }
+      message: "API erreur",
+    };
   }
 }

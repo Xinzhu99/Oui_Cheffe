@@ -44,14 +44,15 @@ export default async function MyList() {
 
       <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2">
         {(listFromRecipe.length > 0 || customizedData.length > 0) && (
-          <Link href="/my-list/final">
-            <button className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors">
-              Finaliser ma liste
-            </button>
-          </Link>
+          <>
+            <Link href="/my-list/final">
+              <button className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors">
+                Finaliser ma liste
+              </button>
+            </Link>
+            <AbandonList />
+          </>
         )}
-
-        <AbandonList />
       </div>
     </div>
   );

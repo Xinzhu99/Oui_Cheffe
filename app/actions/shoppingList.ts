@@ -84,6 +84,9 @@ export default async function addToShoppingList() {
       })
     }
 
+
+    // ✅ NOUVEAU : Passe tous les items du menu en "locked"
+    await db.update(menu).set({ status: "locked" })
     revalidatePath("/my-list")
 
     return {
@@ -149,7 +152,8 @@ export async function abandonList(): Promise<void> {
     
     await db.delete(shopping_list)
     await db.delete(customized_items)
-
+    // ✅  Débloquer le menu
+    await db.update(menu).set({ status: "active" })
 
     // ✅ Revalide les pages
     revalidatePath("/my-list")
@@ -157,7 +161,6 @@ export async function abandonList(): Promise<void> {
 
     // ✅ Redirige (n'atteint jamais le return après)
     redirect("/my-dishes")
- 
 }
 
 // ==========================================
