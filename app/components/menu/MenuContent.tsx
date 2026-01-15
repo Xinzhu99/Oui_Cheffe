@@ -4,13 +4,14 @@ import { deleteFromMenu } from "@/app/actions/menu";
 import { DishesByDate } from "@/lib/types/menu";
 import Link from "next/link";
 import { useState } from "react";
+import { DishImage } from "../images/DishImage";
 
 export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
   const [message, setMessage] = useState("")
   //fonction pour gérer la suppression d'un plat du menu :
   const handleClick = async (id: number) => {
     const result = await deleteFromMenu(id);
-    setMessage(result.message)
+    if (result){setMessage(result.message)}
   };
   if (menu.length === 0) {
     return (
@@ -32,9 +33,7 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
               href={`/dish/${dish.id}`}
               className="flex"
             >
-              <div className="picWrapper rounded-2xl bg-orange-400 w-[64px] h-[64px] flex justify-center items-center shadow">
-                🥞
-              </div>
+              <DishImage dishName={dish.name} dbImageUrl={dish.image} />
               <div className="textWrapper">
                 <h1 className="text-[15px] font-bold">{dish.name}</h1>
                 <h1 className="text-xs font-bold uppercase tracking-wider text-gray-400">

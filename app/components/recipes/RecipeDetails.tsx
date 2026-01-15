@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { addToMenu } from "../../actions/menu";
 import Image from "next/image";
+import { DishImage } from "../images/DishImage";
 
 export default function RecipeDetails({
   recipe,
@@ -10,6 +11,7 @@ export default function RecipeDetails({
     dishId: number;
     dishName: string;
     prepTime: number | null;
+    image: string | null;
     instructions: string | null;
     ingredients: Array<{
       id: number;
@@ -41,12 +43,10 @@ export default function RecipeDetails({
     <div className=" h-3/10">
       {/* partie image plat */}
       <div className="picWrapper">
-        <Image
-          src="/mockup.jpg"
-          alt={recipe.dishName}
-          width={800}
-          height={300}
-          className="object-cover"
+        <DishImage
+          dishName={recipe.dishName}
+          dbImageUrl={recipe.image}
+          className="h-48 w-full rounded-t-lg"
         />
       </div>
 

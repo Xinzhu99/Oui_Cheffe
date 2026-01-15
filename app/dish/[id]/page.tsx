@@ -26,6 +26,7 @@ export default async function DishDetails({
       ingredientName: ingredients.name,
       ingredientUnit: ingredients.unit,
       quantity: dish_ingredients.quantity,
+      dishImage:dishes.image_url,
     })
     .from(dishes)
     .leftJoin(dish_ingredients, eq(dish_ingredients.dish_id, dishes.id))
@@ -41,6 +42,7 @@ export default async function DishDetails({
     dishName: recipeDetails[0].dishName,
     instructions: recipeDetails[0].instructions,
     prepTime: recipeDetails[0].prepTime,
+    image: recipeDetails[0].dishImage,
     ingredients: recipeDetails
       .filter(item => item.ingredientId !== null)
       .map(item => ({

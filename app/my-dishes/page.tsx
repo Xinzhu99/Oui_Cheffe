@@ -13,7 +13,8 @@ export default async function MyDishes() {
         JSON_BUILD_OBJECT(
           'name', dishes.name,
           'id',dishes.id,
-          'servings', menu.servings
+          'servings', menu.servings,
+          'image',dishes.Image_url
         ) 
       ) as dish
     FROM menu
@@ -21,7 +22,7 @@ export default async function MyDishes() {
     GROUP BY DATE(menu.created_at)
     `);
   const menuArr = menuData.rows as DishesByDate[] //           ↑ "TypeScript, fais-moi confiance, c'est ce type !"
-  // console.log("😁", menuArr);
+  console.log("😁", menuArr);
 
   return (
     <div className="flex flex-col ">

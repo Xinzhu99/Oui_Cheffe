@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Recipe } from "@/lib/types/recipes";
 import Link from "next/link";
+import { DishImage } from "../images/DishImage";
 
 export default function RecipesList({
   recipes,
@@ -10,6 +11,8 @@ export default function RecipesList({
     dishName: string;
     time: number | null;
     dishCat: string | null;
+    dishImage: string | null;
+
   }>;
 }) {
   return (
@@ -26,13 +29,10 @@ export default function RecipesList({
         >
           {/* Image Container */}
           <div className="relative h-[200px] flex items-center justify-center overflow-hidden">
-            <Image
-              src="/mockup.jpg"
-              alt={recipe.dishName}
-              width={400}
-              height={200}
-              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-            />
+            <DishImage 
+            dishName={recipe.dishName} 
+            dbImageUrl={recipe.dishImage}
+            className="h-48 w-full rounded-t-lg"/>
 
             {/* Badge temps */}
             {recipe.time && (

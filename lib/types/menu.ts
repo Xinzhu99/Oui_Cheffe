@@ -7,6 +7,7 @@ export type Dish = {
     name: string,
     id: number, 
     servings : number, 
+    image: string | null,
 }
 
 export type IngredientOfList = {

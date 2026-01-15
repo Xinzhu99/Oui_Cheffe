@@ -18,6 +18,7 @@ export default async function Home({ searchParams } : {
       dishName: dishes.name,
       time: dishes.prep_time,
       dishCat: dish_categories.name,
+      dishImage: dishes.image_url
     })
     .from(dishes)
     .leftJoin(dish_categories, eq(dish_categories.id, dishes.dish_category_id));
