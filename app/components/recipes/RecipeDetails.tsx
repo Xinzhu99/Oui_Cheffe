@@ -40,13 +40,13 @@ export default function RecipeDetails({
   };
 
   return (
-    <div className=" h-3/10">
+    <div className=" h-5/10">
       {/* partie image plat */}
-      <div className="picWrapper">
+      <div className="picWrapper h-70 w-full">
         <DishImage
           dishName={recipe.dishName}
           dbImageUrl={recipe.image}
-          className="h-48 w-full rounded-t-lg"
+          className="h-70 w-full"
         />
       </div>
 
