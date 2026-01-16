@@ -1,9 +1,10 @@
 import { dish_categories, dishes } from "@/lib/db/schema";
 import { db } from "@/lib/db/drizzle";
 import { eq } from "drizzle-orm";
-import HeaderWrapper from "./components/HeaderWrapper";
+
 import RecipesList from "./components/recipes/RecipesList";
 import CategoryBar from "./components/CategoryBar";
+import HeaderWrapper from "./components/HeaderWrapper";
 
 export default async function Home({ searchParams } : {
   searchParams : { category?: string }
