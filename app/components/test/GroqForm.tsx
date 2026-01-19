@@ -32,7 +32,7 @@ export default function GroqForm() {
         setError(data.error || "Une erreur est survenue");
       } else {
         // Afficher le résultat
-        setResult(data);
+        setResult(data.recipe.dish.instructions);
         console.log("✅ Résultat:", data);
       }
       
@@ -108,7 +108,7 @@ export default function GroqForm() {
         }}>
           <h2 style={{ marginBottom: '10px' }}>✅ Résultat de l'analyse</h2>
           <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#059669' }}>
-            Type de plat : <strong>{result.dishType}</strong>
+            Recette : <strong>{result}</strong>
           </p>
         </div>
       )}
