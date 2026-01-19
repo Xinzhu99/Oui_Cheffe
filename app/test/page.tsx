@@ -1,7 +1,7 @@
-import TestYoutbe from "../components/test/TestYoutube";
+import GroqForm from "../components/test/GroqForm";
 
 export default function TestPage (){
     return(
-        <TestYoutbe />
+        <GroqForm />
     )
 }
