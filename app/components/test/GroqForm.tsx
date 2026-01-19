@@ -45,11 +45,11 @@ export default function GroqForm() {
   };
 
   return (
-    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto' }}>
+    <div className="p-3 m-2 ">
       <h1>🧪 Proposer une recette avec l'IA Gen</h1>
       
       <form onSubmit={handleSubmit}>
-        <div className="mb-10px">
+        <div className="mb-2">
           <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
             Colle la transcription d'une vidéo de recette :
           </label>

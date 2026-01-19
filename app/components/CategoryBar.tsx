@@ -22,7 +22,7 @@ export default function CategoryBar() {
 
   };
   return (
-    <div className="flex flex-wrap gap-4 p-4">
+    <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
       <button
         className="rounded-full cursor-pointer bg-white border-2 border-orange-400 px-3 py-1 hover:bg-orange-400 hover:text-white"
         value=""
@@ -33,7 +33,7 @@ export default function CategoryBar() {
         <button
           key={c.id}
           value={c.id}
-          className="rounded-full cursor-pointer bg-white border-2 border-orange-400 px-3 py-1 hover:bg-orange-400 hover:text-white"
+          className="p-2 rounded-full cursor-pointer bg-white border-2 border-orange-400 px-3 py-1 hover:bg-orange-400 hover:text-white"
           onClick={() => handleClick(c.id)}
         >
           {c.name}
