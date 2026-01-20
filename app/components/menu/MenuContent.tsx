@@ -29,7 +29,8 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
           </h1>
 
           {group.dish.map((dish) => (
-            <div className="dishCard bg-white flex justify-between items-center rounded-2xl p-4 shadow gap-4">
+            <div key={dish.id}
+            className="dishCard bg-white flex justify-between items-center rounded-2xl p-4 shadow gap-4">
               <Link
                 key={dish.id}
                 href={`/dish/${dish.id}`}

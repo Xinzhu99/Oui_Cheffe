@@ -1,4 +1,4 @@
-import GroqForm from "../components/test/GroqForm";
+import GroqForm from "../components/recipes/GroqForm";
 
 export default function TestPage (){
     return(
