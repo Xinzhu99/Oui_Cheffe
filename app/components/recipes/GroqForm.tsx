@@ -46,7 +46,6 @@ export default function GroqForm() {
 
   return (
     <div className="p-3 m-2 ">
-      <h1>🧪 Proposer une recette avec l'IA Gen</h1>
       
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
