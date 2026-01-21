@@ -34,14 +34,6 @@ export default function RecipeModalBis() {
               Recette générée✨!
             </h2>
 
-            {/* <button
-              onClick={() => setShowModal(false)}
-              type="button"
-              className="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full text-xl font-bold text-gray-600 flex items-center justify-center transition-colors"
-            >
-              ✕
-            </button> */}
-
             <form className="space-y-4 flex flex-col gap-4 p-4">
               {/* Input Nom */}
               <div className="flex w-full">

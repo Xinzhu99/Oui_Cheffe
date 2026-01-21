@@ -10,7 +10,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
   const [showModal, setShowModal] = useState(true);
 
   return (
-    <>
+     <>
       {showModal && (
         <div
           style={{
@@ -30,59 +30,118 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
           onClick={() => setShowModal(false)}
         >
           <div
-            className="relative bg-white rounded-2xl max-w-3xl w-full shadow-2xl my-8 p-8"
+            className="bg-white rounded-2xl shadow-2xl max-w-md p-4 transform transition-all relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={() => setShowModal(false)}
-              type="button"
-              className="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full text-xl font-bold text-gray-600 flex items-center justify-center transition-colors"
-            >
-              ✕
-            </button>
-
+            {/* Titre */}
             <h2 className="text-3xl font-bold mb-6 text-gray-800">
-              ✅ Recette générée !
+              Recette générée✨!
             </h2>
 
-            <form className="space-y-4">
-              <p className="text-xl">
-                <strong>Nom :</strong> {recipe.dish?.name}
-              </p>
-              <label> Nom du plat : </label>
-              <input type="text" value={recipe.dish?.name} />
+            <form className="space-y-4 flex flex-col gap-4">
+              {/* Input Nom */}
+              <div className="flex w-full">
+                <label className="block mb-2">Nom du plat :</label>
+                <input
+                  name="name"
+                  value={recipe.dish.name}
+                  required
+                  className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
+                />
+              </div>
 
-              <p>
-                <strong>Temps :</strong> {recipe.dish?.prep_time} minutes
-              </p>
+              {/* Input durée */}
+              <div className="flex w-full">
+                <label className="block mb-2">Préparation :</label>
+                <input
+                  name="prep-time"
+                  value={recipe.dish.prep_time}
+                  required
+                  className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
+                />
+              </div>
 
-              <p>
-                <strong>Catégorie :</strong> {recipe.dish?.category}
-              </p>
+              {/* Input dish_cat */}
+              <div className="flex w-full">
+                <label className="block mb-2">Type de plat :</label>
+                <input
+                  name="category"
+                  value={recipe.dish.category}
+                  required
+                  className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
+                />
+              </div>
 
-              <div>
-                <strong>Instructions :</strong>
-                <p className="mt-2 text-gray-700">
-                  {recipe.dish?.instructions}
-                </p>
+              {/* partie liste ingrédients */}
+              <h1 className="text-2xl text-orange-400 m-4 mt-8">
+                📋 Ingrédients
+              </h1>
+
+              <div className="flex flex-col">
+                {/*partie liste des ingrédients */}
+                <ul className="m-4 ">
+                  {recipe.ingredients.map((ingredient) => (
+                    <li
+                      key={ingredient.id}
+                      className="bg-white rounded-2xl my-2 p-4 shadow flex"
+                    >
+                      <input className="text-orange-400 font-extrabold"
+                      type="text"
+                      name="ingredient_name"
+                      value={ingredient.name}
+                      />
+                        
+                      <input className="text-orange-400 font-extrabold"
+                      type="text"
+                      name="ingredient_qqt"
+                      value={ingredient.quantity}
+                      />
+                      
+                      <input className="text-orange-400 font-extrabold"
+                      type="text"
+                      name="ingredient_unit"
+                      value={ingredient.unit}
+                      />
+                                            
+                    </li>
+                  ))}
+                </ul>
+
+              
+
+                <h1 className="text-2xl text-orange-400 m-4 mt-8">
+                  👨‍🍳 Préparation
+                </h1>
+
+                <textarea
+                value={recipe.dish.instructions}
+                name="instructions"
+                rows={10}
+                className="bg-white rounded-2xl m-4 p-4 shadow text-black"/>
+
+                <p>{recipe.name}</p>
+              </div>
+
+              {/* partie BOUTONS */}
+              <div className="flex flex-col gap-4 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="p-2 text-white font-extrabold rounded-2xl w-full
+        transition-all bg-red-500 hover:bg-red-600"
+                >
+                  Annuler
+                </button>
+
+                <button
+                  type="button"
+                  className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors"
+                >
+                  Enregistrer
+                </button>
+
               </div>
             </form>
-
-            <div className="flex gap-4 mt-6">
-              <button
-                type="button"
-                onClick={() => setShowModal(false)}
-                className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-bold transition-colors"
-              >
-                Annuler
-              </button>
-              <button
-                type="button"
-                className="flex-1 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-bold transition-colors"
-              >
-                Enregistrer
-              </button>
-            </div>
           </div>
         </div>
       )}

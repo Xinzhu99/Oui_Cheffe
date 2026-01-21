@@ -78,7 +78,7 @@ export default function GroqForm() {
       )}
 
       {/* Le modal */}
-      {/* {result && <RecipeModal recipe={result} />} */}
+      {result && <RecipeModal recipe={result} />}
 
 
     </div>
