@@ -86,7 +86,6 @@ export default function RecipeDetails({
       </div>
 
       {/* partie liste ingrédients */}
-      <div></div>
       <h1 className="text-2xl text-orange-400 m-4 mt-8">📋 Ingrédients</h1>
 
       <div className="flex flex-col">
