@@ -1,23 +1,23 @@
 "use client"
-
 import { useState } from "react";
 
-export default function GroqForm() {
+interface GroqFormProps {
+  onRecipeGenerated: (recipe: any) => void;  // ✅ Callback
+}
+
+export default function GroqForm({onRecipeGenerated}:GroqFormProps) {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Réinitialiser les états
     setLoading(true);
-    setError(null);
-    setResult(null);
+    setError("");
 
     try {
-      const res = await fetch("/api/groq", {  // ✅ URL relative
+      const res = await fetch("/api/groq", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -28,12 +28,11 @@ export default function GroqForm() {
       const data = await res.json();
       
       if (!res.ok) {
-        // Gérer les erreurs HTTP
         setError(data.error || "Une erreur est survenue");
       } else {
-        // Afficher le résultat
-        setResult(data.recipe.dish.instructions);
-        console.log("✅ Résultat:", data);
+        // ✅ envoyer la data au parent
+        onRecipeGenerated(data.recipe)
+        console.log("✅ Résultat complet:", data.recipe);
       }
       
     } catch (error) {
@@ -44,16 +43,15 @@ export default function GroqForm() {
     }
   };
 
+
   return (
-    <div className="p-3 m-2 ">
-      
+    <div className="p-3 m-2">
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
-          <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
+          <label className="block mb-2 font-bold">
             Colle la transcription d'une vidéo de recette :
           </label>
           
-          {/* ✅ Utiliser textarea au lieu d'input */}
           <textarea
             className="w-full p-3 border-2 border-amber-500 bg-amber-100 rounded"
             value={text}
@@ -67,16 +65,7 @@ export default function GroqForm() {
         <button 
           type="submit"
           disabled={loading || !text.trim()}
-          style={{
-            padding: '12px 24px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            backgroundColor: loading ? '#ccc' : '#f59e0b',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: loading ? 'not-allowed' : 'pointer'
-          }}
+          className="px-6 p-3 text-base font-bold text-white border-none rounded-lg bg-orange-400"
         >
           {loading ? '⏳ Analyse en cours...' : '🚀 Générer la recette'}
         </button>
@@ -84,33 +73,13 @@ export default function GroqForm() {
 
       {/* Affichage des erreurs */}
       {error && (
-        <div style={{ 
-          marginTop: '20px', 
-          padding: '20px', 
-          backgroundColor: '#fee2e2', 
-          borderRadius: '8px',
-          color: '#dc2626',
-          border: '2px solid #fca5a5'
-        }}>
+        <div className="mt-5 p-5 bg-red-100 rounded-lg text-red-600 border-2 border-red-300"
+        >
           <strong>❌ Erreur :</strong> {error}
         </div>
       )}
 
-      {/* Affichage du résultat */}
-      {result && (
-        <div style={{ 
-          marginTop: '20px', 
-          padding: '20px', 
-          backgroundColor: '#d1fae5', 
-          borderRadius: '8px',
-          border: '2px solid #6ee7b7'
-        }}>
-          <h2 style={{ marginBottom: '10px' }}>✅ Résultat de l'analyse</h2>
-          <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#059669' }}>
-            Recette : <strong>{result}</strong>
-          </p>
-        </div>
-      )}
+      
     </div>
   );
 }

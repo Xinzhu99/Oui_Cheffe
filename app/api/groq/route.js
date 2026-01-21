@@ -35,7 +35,7 @@ export async function POST(request) {
     existing_ingredient_cats = ingredientCats.map(cat=>cat.name)
     
     //3. Créer le prompt
-    const prompt = `Analyse cette transcription de recette et retourne un JSON structuré.
+    const prompt = `TU es un expert culinaire. Analyse cette transcription et vérifie s'il s'agit d'une transcription d'une vidéo recette. Si non, retourne un message error adapté. Si oui, analyse cette transcription de recette et retourne un JSON structuré.
 
 STRUCTURE EXACTE à respecter :
 {
@@ -106,7 +106,7 @@ ${transcript}`;
       
       return NextResponse.json(
         { 
-          error: "L'IA n'a pas retourné un JSON valide",
+          error: responseText,
           details: parseError.message,
           rawResponse: responseText.substring(0, 500)
         },
