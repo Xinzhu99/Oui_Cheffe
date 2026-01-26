@@ -1,5 +1,6 @@
 "use client";
 
+import { addToRecipes } from "@/app/actions/recipes";
 import { useState } from "react";
 
 interface RecipeModalProps {
@@ -8,9 +9,20 @@ interface RecipeModalProps {
 
 export default function RecipeModal({ recipe }: RecipeModalProps) {
   const [showModal, setShowModal] = useState(true);
+  const [message, setMessage] = useState("");
 
+  //fonction handleSubmit pour envoyer la data au back
+
+  const handleSubmit = async (formData: FormData) => {
+    const result = await addToRecipes(formData);
+
+    setMessage(result.message)
+  };
+  //prevent
+  //appeler l'action
+  //recevoir le message
   return (
-     <>
+    <>
       {showModal && (
         <div
           style={{
@@ -35,10 +47,16 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               Recette générée✨!
             </h2>
 
-            <form className="space-y-4 flex flex-col gap-4 ">
+            {/* ✅✅✅ Partie formulaire */}
+            <form
+              className="space-y-4 flex flex-col gap-4 "
+              action={handleSubmit}
+            >
               {/* Input Nom */}
               <div className="flex w-full">
-                <label className="block mb-2">Nom du plat : </label>
+                <label className=" mb-2 text-xl text-orange-400">
+                  Nom du plat :{" "}
+                </label>
                 <input
                   name="name"
                   defaultValue={recipe.dish.name}
@@ -52,6 +70,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
                 <label className="block mb-2">Préparation : </label>
                 <input
                   name="prep-time"
+                  type="number"
                   defaultValue={recipe.dish.prep_time}
                   required
                   className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
@@ -77,50 +96,46 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               <div className="flex flex-col w-4/5">
                 {/*partie liste des ingrédients */}
                 <ul className="m-4">
-                  {recipe.ingredients.map((ingredient) => (
+                  {recipe.ingredients.map((ingredient: any, index: number) => (
                     <li
-                      key={ingredient.id}
+                      key={index}
                       className="bg-white rounded-2xl my-2 p-4 shadow flex justify-around"
                     >
-                      <input className="text-orange-400 font-extrabold"
-                      key={ingredient.id}
-                      type="text"
-                      name="ingredient_name"
-                      defaultValue={ingredient.name}
+                      <input
+                        className="text-orange-400 font-extrabold"
+                        type="text"
+                        name={`ingredient_name_${index}`}
+                        defaultValue={ingredient.name}
                       />
-                        
-                      <input className="text-orange-400 font-extrabold"
-                      type="text"
-                      name="ingredient_qqt"
-                      key={ingredient.id}
 
-                      defaultValue={ingredient.quantity}
+                      <input
+                        className="text-orange-400 font-extrabold"
+                        type="number"
+                        step="0.01"
+                        name={`ingredient_qqt_${index}`}
+                        defaultValue={ingredient.quantity}
                       />
-                      
-                      <input className="text-orange-400 font-extrabold"
-                      type="text"
-                      name="ingredient_unit"
-                      key={ingredient.id}
-                      defaultValue={ingredient.unit}
+
+                      <input
+                        className="text-orange-400 font-extrabold"
+                        type="text"
+                        name={`ingredient_unit_${index}`}
+                        defaultValue={ingredient.unit}
                       />
-                                            
                     </li>
                   ))}
                 </ul>
-
-              
 
                 <h1 className="text-2xl text-orange-400 m-4 mt-8">
                   👨‍🍳 Préparation
                 </h1>
 
                 <textarea
-                defaultValue={recipe.dish.instructions}
-                name="instructions"
-                rows={10}
-                className="bg-white rounded-2xl m-4 p-4 shadow text-black"/>
-
-                <p>{recipe.name}</p>
+                  defaultValue={recipe.dish.instructions}
+                  name="instructions"
+                  rows={10}
+                  className="bg-white rounded-2xl m-4 p-4 shadow text-black"
+                />
               </div>
 
               {/* partie BOUTONS */}
@@ -135,13 +150,25 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
                 </button>
 
                 <button
-                  type="button"
+                  type="submit"
                   className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors"
                 >
                   Enregistrer
                 </button>
-
               </div>
+
+              {/* partie message */}
+              {message && (
+                <div
+                  className={`m-4 p-4 rounded-2xl text-center font-bold ${
+                    message
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
             </form>
           </div>
         </div>
