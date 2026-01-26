@@ -76,11 +76,11 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
 
               <div className="flex flex-col w-4/5">
                 {/*partie liste des ingrédients */}
-                <ul className="m-4 w-full">
+                <ul className="m-4">
                   {recipe.ingredients.map((ingredient) => (
                     <li
                       key={ingredient.id}
-                      className="bg-white rounded-2xl my-2 p-4 shadow flex w-90 justify-around"
+                      className="bg-white rounded-2xl my-2 p-4 shadow flex justify-around"
                     >
                       <input className="text-orange-400 font-extrabold"
                       key={ingredient.id}
