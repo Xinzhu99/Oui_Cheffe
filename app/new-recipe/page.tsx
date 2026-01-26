@@ -13,7 +13,7 @@ export default function TestPage() {
         />
 
         <GroqForm  />
-        <RecipeModalBis />
+        {/* <RecipeModalBis /> */}
       </div>
   );
 }

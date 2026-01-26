@@ -21,16 +21,13 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
             bottom: 0,
             zIndex: 9999,
             backgroundColor: "rgba(0, 0, 0, 0.8)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             padding: "24px",
             overflowY: "auto",
           }}
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl max-w-md p-4 transform transition-all relative"
+            className="bg-white rounded-2xl shadow-2xl max-w-4/5 p-4 transform transition-all relative overflow-y-auto justify-center items-center"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Titre */}
@@ -38,13 +35,13 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               Recette générée✨!
             </h2>
 
-            <form className="space-y-4 flex flex-col gap-4">
+            <form className="space-y-4 flex flex-col gap-4 ">
               {/* Input Nom */}
               <div className="flex w-full">
-                <label className="block mb-2">Nom du plat :</label>
+                <label className="block mb-2">Nom du plat : </label>
                 <input
                   name="name"
-                  value={recipe.dish.name}
+                  defaultValue={recipe.dish.name}
                   required
                   className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
                 />
@@ -52,10 +49,10 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
 
               {/* Input durée */}
               <div className="flex w-full">
-                <label className="block mb-2">Préparation :</label>
+                <label className="block mb-2">Préparation : </label>
                 <input
                   name="prep-time"
-                  value={recipe.dish.prep_time}
+                  defaultValue={recipe.dish.prep_time}
                   required
                   className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
                 />
@@ -63,10 +60,10 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
 
               {/* Input dish_cat */}
               <div className="flex w-full">
-                <label className="block mb-2">Type de plat :</label>
+                <label className="block mb-2">Type de plat : </label>
                 <input
                   name="category"
-                  value={recipe.dish.category}
+                  defaultValue={recipe.dish.category}
                   required
                   className="border-2 border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400 transition-all"
                 />
@@ -77,30 +74,34 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
                 📋 Ingrédients
               </h1>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col w-4/5">
                 {/*partie liste des ingrédients */}
-                <ul className="m-4 ">
+                <ul className="m-4 w-full">
                   {recipe.ingredients.map((ingredient) => (
                     <li
                       key={ingredient.id}
-                      className="bg-white rounded-2xl my-2 p-4 shadow flex"
+                      className="bg-white rounded-2xl my-2 p-4 shadow flex w-90 justify-around"
                     >
                       <input className="text-orange-400 font-extrabold"
+                      key={ingredient.id}
                       type="text"
                       name="ingredient_name"
-                      value={ingredient.name}
+                      defaultValue={ingredient.name}
                       />
                         
                       <input className="text-orange-400 font-extrabold"
                       type="text"
                       name="ingredient_qqt"
-                      value={ingredient.quantity}
+                      key={ingredient.id}
+
+                      defaultValue={ingredient.quantity}
                       />
                       
                       <input className="text-orange-400 font-extrabold"
                       type="text"
                       name="ingredient_unit"
-                      value={ingredient.unit}
+                      key={ingredient.id}
+                      defaultValue={ingredient.unit}
                       />
                                             
                     </li>
@@ -114,7 +115,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
                 </h1>
 
                 <textarea
-                value={recipe.dish.instructions}
+                defaultValue={recipe.dish.instructions}
                 name="instructions"
                 rows={10}
                 className="bg-white rounded-2xl m-4 p-4 shadow text-black"/>
