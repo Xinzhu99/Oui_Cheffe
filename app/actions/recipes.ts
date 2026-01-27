@@ -10,6 +10,7 @@ import {
 import { eq } from "drizzle-orm";
 import { FormData } from "groq-sdk/_shims/node-types.mjs";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation"
 
 export async function addToRecipes(formData: FormData) {
   try {
@@ -110,12 +111,13 @@ export async function addToRecipes(formData: FormData) {
     
     revalidatePath("/"); // Recharge les données de la page d'accueil
     revalidatePath("/my-dishes"); // Recharge les données de mes plats
-
+    
     return {
       success: true,
       message: "Recette enregistrée avec succès !",
       dishId: newDish.id,
     };
+
   } catch (error) {
     console.error("❌ Erreur lors de l'enregistrement:", error);
     return {

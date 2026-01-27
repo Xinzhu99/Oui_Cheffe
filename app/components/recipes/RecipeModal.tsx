@@ -1,6 +1,7 @@
 "use client";
 
 import { addToRecipes } from "@/app/actions/recipes";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 interface RecipeModalProps {
@@ -17,10 +18,12 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
     const result = await addToRecipes(formData);
 
     setMessage(result.message)
+
+    setTimeout(()=> {
+           redirect("/")
+         }, 1000)
   };
-  //prevent
-  //appeler l'action
-  //recevoir le message
+  
   return (
     <>
       {showModal && (
