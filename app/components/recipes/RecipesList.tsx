@@ -26,7 +26,7 @@ export default function RecipesList({
             Aucune recette trouvée
           </h3>
           <p className="text-sm text-gray-600 opacity-80">
-            Essayez une autre catégorie ou proposez votre recette !
+            Essaie une autre catégorie ou propose ta recette !
           </p>
         </div>
       )}

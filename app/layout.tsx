@@ -1,8 +1,8 @@
 import "./globals.css";
 import Link from "next/link";
-import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
 import { Montserrat } from 'next/font/google'
+import { WandSparkles, CookingPot, CalendarHeart,  ShoppingBasket  } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: "OuiCheffe",
@@ -29,7 +29,7 @@ export default function RootLayout({
       <body className="bg-[#FFFAF7]">
         {/* Navbar logo - SIMPLIFIÉ */}
         <nav className="fixed bg-white top-0 left-0 right-0 z-50 border-b border-gray-200 
-                flex justify-center items-center px-4 h-16">
+                flex justify-center items-center px-4 h-20">
           <img 
             src="/images/logo/OuiCheffe02_clean.svg"
             alt="OuiCheffe logo"
@@ -48,8 +48,20 @@ export default function RootLayout({
               href="/"
               className="flex flex-col items-center justify-center flex-1 h-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-all active:scale-95"
             >
-              <span className="text-2xl mb-1">🍳</span>
+              <CookingPot/>
               <span className="text-xs font-medium">Recettes</span>
+            </Link>
+
+            
+
+            {/* Mon Menu */}
+            <Link
+              href="/my-dishes"
+              className="flex flex-col items-center justify-center flex-1 h-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-all active:scale-95"
+            >
+              <CalendarHeart />
+
+              <span className="text-xs font-medium">Mon Menu</span>
             </Link>
 
             {/* Ma Liste */}
@@ -57,17 +69,8 @@ export default function RootLayout({
               href="/my-list"
               className="flex flex-col items-center justify-center flex-1 h-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-all active:scale-95"
             >
-              <span className="text-2xl mb-1">🛒</span>
+              <ShoppingBasket/>
               <span className="text-xs font-medium">Ma Liste</span>
-            </Link>
-
-            {/* Mon Menu */}
-            <Link
-              href="/my-dishes"
-              className="flex flex-col items-center justify-center flex-1 h-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-all active:scale-95"
-            >
-              <span className="text-2xl mb-1">📅</span>
-              <span className="text-xs font-medium">Mon Menu</span>
             </Link>
 
             {/* Proposer une recette - NOUVEAU */}
@@ -75,8 +78,8 @@ export default function RootLayout({
               href="/new-recipe"
               className="flex flex-col items-center justify-center flex-1 h-full text-gray-600 hover:text-orange-500 hover:bg-orange-50 transition-all active:scale-95"
             >
-              <span className="text-2xl mb-1">✨</span>
-              <span className="text-xs font-medium">Proposer</span>
+              <WandSparkles/>
+              <span className="text-xs font-medium">Proposer</span> 
             </Link>
           </div>
         </nav>
