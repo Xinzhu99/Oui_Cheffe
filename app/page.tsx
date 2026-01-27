@@ -34,9 +34,9 @@ export default async function Home({
   const recipes = await query;
 
   return (
-    <div className="flex flex-col pt-4">
+    <div className="flex flex-col min-h-screen pb-32">
       <HeaderWrapper
-        header="De quoi t'as envie ?"
+        header="De quoi tu as envie ?"
         text="Bienvenue à la cuisine de Xinzhu !"
       />
 
@@ -46,10 +46,14 @@ export default async function Home({
       {/*liste des recettes */}
       <RecipesList recipes={recipes} />
 
-      <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 p-4 gap-2">
+      <div className="stickyContainer flex flex-col fixed bottom-13 left-0 right-0 p-4 gap-2">
         <Link
           href="/new-recipe"
-          className="text-center bg-orange-400 p-2 w-full text-white font-extrabold rounded-2xl sticky bottom-2 cursor-pointer"
+          className="block text-center font-bold px-6 py-4 rounded-2xl text-white transition-all duration-300 hover:shadow-xl active:scale-98"
+          style={{
+            background: 'linear-gradient(135deg, #FF8C61, #FF6B35)',
+            boxShadow: '0 8px 24px rgba(255, 107, 53, 0.15)',
+          }}
         >
           Proposer une recette
         </Link>
