@@ -70,6 +70,7 @@ export async function addToRecipes(formData: FormData) {
       })
       .returning({ id: dishes.id });
     console.log("Plat crée !!!!!:", newDish);
+
     //insérer le nom d'ingredient et l'unité dans la table ingredients depuis le tableau ingredientsList
     //boucler sur le tableau, pour chaque item {name, quantity, unit}
     //vérifier si l'ingreident existe : si oui : retourner le id; sinon, créer l'ingredient et attacher l'unit et
@@ -105,16 +106,16 @@ export async function addToRecipes(formData: FormData) {
       });
 
       console.log("✅ Liaison créée pour", ingredientData.name);
-
-      revalidatePath("/"); // Recharge les données de la page d'accueil
-      revalidatePath("/my-dishes"); // Recharge les données de mes plats
-
-      return {
-        success: true,
-        message: "Recette enregistrée avec succès !",
-        dishId: newDish.id,
-      };
     }
+    
+    revalidatePath("/"); // Recharge les données de la page d'accueil
+    revalidatePath("/my-dishes"); // Recharge les données de mes plats
+
+    return {
+      success: true,
+      message: "Recette enregistrée avec succès !",
+      dishId: newDish.id,
+    };
   } catch (error) {
     console.error("❌ Erreur lors de l'enregistrement:", error);
     return {

@@ -62,6 +62,7 @@ RÈGLES IMPORTANTES :
 4. Réponds UNIQUEMENT avec le JSON valide
 5. N'ajoute AUCUN texte avant ou après le JSON
 6. N'utilise PAS de \`\`\`json ou autre formatage Markdown
+7. Pour le name de chaque ingrédient, la prémière lettre est au majuscule
 
 Transcription de la recette :
 ${transcript}`;

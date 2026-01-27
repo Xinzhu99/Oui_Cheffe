@@ -33,7 +33,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
             bottom: 0,
             zIndex: 9999,
             backgroundColor: "rgba(0, 0, 0, 0.8)",
-            padding: "24px",
+            padding: "100px",
             overflowY: "auto",
           }}
           onClick={() => setShowModal(false)}
@@ -105,7 +105,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
                         className="text-orange-400 font-extrabold"
                         type="text"
                         name={`ingredient_name_${index}`}
-                        defaultValue={ingredient.name}
+                        defaultValue={ingredient.name.charAt(0).toUpperCase() + ingredient.name.slice(1).toLowerCase()}
                       />
 
                       <input
