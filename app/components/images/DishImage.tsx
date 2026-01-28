@@ -19,7 +19,7 @@ export function DishImage({
   const imageUrl = getDishImageUrl(dishName, dbImageUrl);
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative w-15 h-15 ${className}`}>
   <Image
     src={imageUrl}
     alt={dishName}

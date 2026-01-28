@@ -23,7 +23,7 @@ export async function addToMenu(dishId: number, servings: number) {
     if (isLocked) {
       return {
         success: false,
-        message: "🔒 Vous avez une liste en cours. Pour modifier votre menu, veuillez abandonner la liste actuelle"
+        message: "🔒 Liste déjà créé. Pour modifier le menu, abandonne la liste actuelle"
       }
     }
 
@@ -35,7 +35,7 @@ export async function addToMenu(dishId: number, servings: number) {
     if (dishExists) {
       return {
         success: false,
-        message: "❌ Vous avez déjà ajouté ce plat"
+        message: "❌ Tu as déjà ajouté ce plat"
       }
     }
 
@@ -54,7 +54,7 @@ export async function addToMenu(dishId: number, servings: number) {
 
     return {
       success: true,
-      message: "✅ Le plat a été ajouté à votre menu !"
+      message: "✅ Le plat a été ajouté à ton menu !"
     }
 
   } catch (error) {
@@ -75,13 +75,13 @@ export async function deleteFromMenu(dishId: number) {
     if (dish.length === 0) {
       return {
         sucess: false,
-        message: "Le plat choisi n'existe pas dans votre menu",
+        message: "Le plat choisi n'existe pas dans ton menu",
       };
     }
     if(dish[0].status == "locked"){
       return {
         success: false,
-        message:"🔒 Vous avez une liste en cours. Pour modifier votre menu, veuillez abandonner la liste actuelle"
+        message:"🔒 Liste déjà créé. Pour modifier le menu, abandonne la liste actuelle"
       }
     }
 

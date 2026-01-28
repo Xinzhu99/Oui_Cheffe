@@ -15,42 +15,88 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
       setMessage(result.message);
     }
   };
+
+  {
+    /*partie quand aucun dish dans le menu */
+  }
   if (menu.length === 0) {
     return (
-      <div className="m-4 p-4">Vous n'avez pas encore ajouté de plat.</div>
+      <div className="flex flex-col items-center justify-center text-center py-20 px-5">
+        <div className="text-6xl mb-4 opacity-30">📅</div>
+        <h3
+          className="text-xl font-bold mb-2 text-gray-600"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          Ton menu est vide
+        </h3>
+        <p className="text-sm text-gray-600 opacity-80 mb-6">
+          Ajoute des recettes pour créer ton menu de la semaine !
+        </p>
+        <Link
+          href="/"
+          className="px-6 py-3 rounded-2xl font-bold text-white transition-all "
+          style={{
+            background: "linear-gradient(135deg, #FF8C61, #FF6B35)",
+            boxShadow: "0 8px 24px rgba(255, 107, 53, 0.15)",
+            fontFamily: "'Montserrat', sans-serif",
+          }}
+        >
+          Découvrir les recettes
+        </Link>
+      </div>
     );
   }
+
   return (
     <div className="dishList flex flex-col">
       {menu.map((group, index) => (
         <div key={index} className=" flex flex-col p-4 gap-4">
-          <h1 className=" text-[22px] font-bold leading-tight text-orange-500">
+          <h2
+            className="text-xl font-bold mb-2"
+            style={{
+              fontFamily: "'Montserrat', sans-serif",
+              color: "#FF6B35",
+            }}
+          >
             📅 {group.date}
-          </h1>
+          </h2>
 
           {group.dish.map((dish) => (
-            <div key={dish.id}
-            className="dishCard bg-white flex justify-between items-center rounded-2xl p-4 shadow gap-4">
+            <div
+              key={dish.id}
+              className="dishCard bg-white flex justify-between items-center rounded-2xl p-4 gap-4 border border-gray-200 transition-all hover:-translate-y-0.5"
+              style={{
+                boxShadow: "0 4px 16px rgba(255, 107, 53, 0.08)",
+                animation: `fadeInUp 0.4s ease-out backwards`,
+              }}
+            >
               <Link
-                key={dish.id}
                 href={`/dish/${dish.id}`}
-                className="flex gap-4 items-center flex-1" // ← Changements ici
+                className="flex gap-4 items-center flex-1"
               >
-                <div className="picWrapper rounded-2xl flex-shrink-0">
+                <div className="picWrapper rounded-2xl">
                   <DishImage dishName={dish.name} dbImageUrl={dish.image} />
                 </div>
+
                 <div className="textWrapper">
-                  <h1 className="text-[15px] font-bold">{dish.name}</h1>
-                  <h1 className="text-xs font-bold uppercase tracking-wider text-gray-400">
-                    {dish.servings} personnes
-                  </h1>
+                  <h3
+                    className="text-base font-bold text-gray-900 mb-1"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    {dish.name}
+                  </h3>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                    {dish.servings}{" "}
+                    {dish.servings > 1 ? "personnes" : "personne"}
+                  </p>
                 </div>
               </Link>
 
-              {/* Bouton supprimer avec meilleur styling */}
+              {/* Bouton supprimer plus visible */}
               <button
-                className="cursor-pointer hover:bg-red-50 p-2 rounded-lg transition-colors flex-shrink-0"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-all active:scale-95 "
                 onClick={() => handleClick(dish.id)}
+                title="Supprimer du menu"
               >
                 🗑️
               </button>
@@ -61,8 +107,20 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
 
       {/* partie message */}
       {message && (
-        <div className="m-4 p-4 rounded-2xl text-center font-bold bg-red-100 text-red-800">
-          {message}
+        <div
+          className="mx-4 mb-10 p-4 bg-red-50 rounded-2xl border-2 border-red-200"
+        >
+          <div className="flex items-start gap-3">
+            <div>
+              <strong
+                className="block text-red-900 mb-1"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                Attention
+              </strong>
+              <p className="text-sm text-red-700">{message}</p>
+            </div>
+          </div>
         </div>
       )}
     </div>

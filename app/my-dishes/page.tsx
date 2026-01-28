@@ -21,7 +21,7 @@ export default async function MyDishes() {
     LEFT JOIN dishes ON dishes.id = menu.dish_id
     GROUP BY DATE(menu.created_at)
     `);
-  const menuArr = menuData.rows as DishesByDate[] //           ↑ "TypeScript, fais-moi confiance, c'est ce type !"
+  const menuArr = menuData.rows as DishesByDate[] //           
   console.log("😁", menuArr);
 
   return (
