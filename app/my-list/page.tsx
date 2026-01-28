@@ -7,6 +7,7 @@ import ManualAdd from "../components/shoppingList/ManualAdd";
 import AbandonList from "../components/shoppingList/AbandonList";
 import Link from "next/link";
 import CustomizedList from "../components/customized/CustomizedList";
+import SectionCard from "../components/shoppingList/SectionCard";
 
 export default async function MyList() {
   const listFromRecipeRaw = await db
@@ -15,8 +16,6 @@ export default async function MyList() {
     .leftJoin(ingredients, eq(ingredients.id, shopping_list.ingredient_id));
 
   const customizedData = await db.select().from(customized_items);
-
-  // console.log("xxxxxxxxxxxxxx",customizedData)
 
   // ✅ Transforme avec valeur par défaut pour null
   const listFromRecipe = listFromRecipeRaw.map((item) => ({
@@ -28,30 +27,53 @@ export default async function MyList() {
   }));
 
   return (
-    <div className="pb-32">
-      <HeaderWrapper header="Ma liste" text="Vos prochaines courses" />
+    <div className="pb-20">
+      <HeaderWrapper header="Mes listes" text="Mes prochaines courses" />
 
-      <div className="text-[22px] font-bold leading-tight text-orange-400 m-4">
-        🍳 Depuis mes recettes
+      {/* Section 1 : Depuis recettes */}
+      <div className="mx-4 mb-6">
+        <SectionCard
+          title="🍳 Depuis mes recettes"
+          isEmpty={listFromRecipe.length === 0}
+          emptyMessage="Ajoute des recettes à ton menu"
+        >
+          <ShoppingList listByIngredient={listFromRecipe} />
+        </SectionCard>
       </div>
-      <ShoppingList listByIngredient={listFromRecipe} />
 
-      <div className="text-[22px] font-bold leading-tight text-orange-400 m-4">
-        🛒 Ajoutés manuellement
+      {/* Section 2 : Manuel */}
+      <div className="mx-4 mb-6">
+        <SectionCard title="🛒 Ajoutés manuellement" isEmpty={false}>
+          <ManualAdd />
+          <CustomizedList items={customizedData} />
+        </SectionCard>
       </div>
-      <ManualAdd />
-      <CustomizedList items={customizedData} />
 
-      <div className="stickyContainer flex flex-col fixed bottom-20 left-0 right-0 bg-white p-4 gap-2">
+      {/* Boutons en bas */}
+      <div
+        className="fixed bottom-16 left-0 right-0 p-4 bg-white/95 backdrop-blur-sm border-t border-gray-200 z-50"
+        style={{ boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.05)" }}
+      >
         {(listFromRecipe.length > 0 || customizedData.length > 0) && (
-          <>
-            <Link href="/my-list/final">
-              <button className="w-full bg-orange-400 p-2 text-white font-extrabold rounded-2xl cursor-pointer hover:bg-orange-500 transition-colors">
-                Finaliser ma liste
+          <div className="flex gap-3 justify-between">
+
+            {/* Bouton Finaliser (principal) */}
+            <Link href="/my-list/final" >
+              <button
+                className="w-full px-6 py-4 rounded-2xl font-bold text-white transition-all "
+                style={{
+                  background: "linear-gradient(135deg, #FF8C61, #FF6B35)",
+                  boxShadow: "0 8px 24px rgba(255, 107, 53, 0.15)",
+                  fontFamily: "'Montserrat', sans-serif",
+                }}
+              >
+                Partir pour les courses
               </button>
             </Link>
+
+            {/* Bouton Abandonner (secondaire) */}
             <AbandonList />
-          </>
+          </div>
         )}
       </div>
     </div>

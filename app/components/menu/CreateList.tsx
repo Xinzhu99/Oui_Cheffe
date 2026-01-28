@@ -45,7 +45,7 @@ export default function CreateList() {
         }}
       >
         <span className="flex items-center justify-center gap-2">
-          <span>Créer ma liste de courses</span>
+          Créer ma liste de courses
         </span>
       </button>
     </div>

@@ -145,7 +145,7 @@ export default function RecipeDetails({
         </h1>
 
         <div
-          className="bg-white rounded-2xl mx-4 p-5 border border-gray-200"
+          className="bg-white rounded-2xl mx-4 p-5 border border-gray-200 mb-10"
           style={{ boxShadow: "0 2px 8px rgba(255, 107, 53, 0.08)" }}
         >
           <p className="text-gray-700 leading-relaxed">{recipe.instructions}</p>
@@ -153,7 +153,7 @@ export default function RecipeDetails({
 
         {/*div bouton */}
         <div
-          className="sticky bottom-16 mx-4 p-4 bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-200"
+          className="fixed bottom-16 left-0 right-0 p-4 bg-white/95 backdrop-blur-sm border-t border-gray-200 z-50"
           style={{ boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.05)" }}
         >
           <button

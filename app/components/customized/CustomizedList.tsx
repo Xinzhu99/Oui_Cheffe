@@ -1,52 +1,57 @@
-"use client"
-
+// APRÈS ✅
+"use client";
 import { deleteFromCustomized } from "@/app/actions/customized";
 
-
-export default function CustomizedList({ 
-  items 
-}: { 
+export default function CustomizedList({
+  items,
+}: {
   items: Array<{
-     id: number;
+    id: number;
     name: string;
-    is_checked: boolean;
-  }>
+  }>;
 }) {
-  // if (items.length === 0) {
-  //   return (
-  //     <div className="m-4 p-4 text-gray-500 text-center">
-  //       Vous n'avez pas encore ajouté d'article manuellement.
-  //     </div>
-  //   )
-  // }
+  const handleClick = async (id: number) => {
+    await deleteFromCustomized(id);
+  };
 
-  const handleClick = async (id:number) => {
-    await deleteFromCustomized(id)
+  if (items.length === 0) {
+    return null; // Pas d'items = pas d'affichage
   }
 
   return (
-    <div className="m-4 space-y-2">
-      {items.map((item) => (
-        <div 
-          key={item.id} 
+    <div className="space-y-2">
+      {items.map((item, index) => (
+        <div
+          key={item.id}
           className={`
-            bg-white p-4 rounded-2xl shadow
-            ${item.is_checked ? 'opacity-50' : ''}
+            flex items-center justify-between p-2 rounded-xl border border-gray-200 transition-all
           `}
+          
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className={`text-[15px] font-bold ${item.is_checked ? 'line-through' : ''}`}>
-                {item.name}
-              </h1>
-            </div>
-            {/* bouton pour supprimer un plat */}
+          {/* Checkbox visuel */}
+          <div className="flex items-center gap-3 flex-1">
+            
 
-              <button className="cursor-pointer" 
-              onClick={() => handleClick(item.id)}>🗑️</button>
+            <h3
+              className={`text-base font-semibold flex-1 ${
+                item.is_checked ? 'line-through text-gray-400' : 'text-gray-900'
+              }`}
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              {item.name}
+            </h3>
           </div>
+
+          {/* Bouton supprimer */}
+          <button
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition-all active:scale-95"
+            onClick={() => handleClick(item.id)}
+            title="Supprimer"
+          >
+            🗑️
+          </button>
         </div>
       ))}
     </div>
-  )
+  );
 }

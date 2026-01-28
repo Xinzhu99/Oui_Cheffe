@@ -1,57 +1,60 @@
-"use client"
+// APRÈS ✅
+"use client";
+import { deleteFromShoppingList } from "@/app/actions/shoppingList";
 
-import { deleteFromShoppingList } from "@/app/actions/shoppingList"
-
-export default function ShoppingList({ 
-  listByIngredient 
-}: { 
+export default function ShoppingList({
+  listByIngredient,
+}: {
   listByIngredient: Array<{
-    id: number
-    ingredientName: string
-    quantity: string  // ✅ Plus de null
-    unit: string
-    isChecked: boolean
-  }>
+    id: number;
+    ingredientName: string;
+    quantity: string;
+    unit: string;
+  }>;
 }) {
-  if (listByIngredient.length === 0) {
-    return (
-      <div className="m-4 p-4 text-gray-500 text-center">
-        Ajoutez les recettes dans votre menu pour créer votre liste automatiquement.
-      </div>
-    )
-  }
+  const handleClick = async (id: number) => {
+    await deleteFromShoppingList(id);
+  };
 
-  const handleClick = async (id:number) => {
-     await deleteFromShoppingList(id)
+  if (listByIngredient.length === 0) {
+    return null; // Géré par SectionCard
   }
 
   return (
-    <div className="m-4 space-y-2">
-      {listByIngredient.map((item) => (
-        <div 
-          key={item.id} 
+    <div className="space-y-1">
+      {listByIngredient.map((item, index) => (
+        <div
+          key={item.id}
           className={`
-            bg-white p-4 rounded-2xl shadow
-            ${item.isChecked ? 'opacity-50' : ''}
+            flex items-center justify-between p-3 rounded-xl border border-gray-200 transition-all
           `}
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className={`text-[15px] font-bold ${item.isChecked ? 'line-through' : ''}`}>
+
+          <div className="flex items-center gap-2 flex-1">
+            <div className="flex-1">
+              <h3
+                className="text-base font-semibold text-gray-900'
+                "
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
                 {item.ingredientName}
-              </h1>
-              <p className="text-xs text-gray-400">
+              </h3>
+              <p className="text-xs text-gray-500 mt-0.5">
                 {Math.round(Number(item.quantity))} {item.unit}
               </p>
             </div>
-
-            {/* bouton pour supprimer un plat */}
-
-              <button className="cursor-pointer" 
-              onClick={() => handleClick(item.id)}>🗑️</button>
           </div>
+
+          {/* Bouton supprimer */}
+          <button
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition-all active:scale-95"
+            onClick={() => handleClick(item.id)}
+            title="Supprimer"
+          >
+            🗑️
+          </button>
         </div>
       ))}
     </div>
-  )
+  );
 }
