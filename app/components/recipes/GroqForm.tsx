@@ -119,30 +119,7 @@ export default function GroqForm() {
         </div>
       )}
 
-      {/* Message de succès
-      {result && !error && (
-        <div 
-          className="mt-5 p-5 bg-green-50 rounded-2xl border-2 border-green-200"
-          style={{
-            animation: 'fadeInUp 0.4s ease-out backwards',
-          }}
-        >
-          <div className="flex items-start gap-3">
-            <span className="text-2xl">✅</span>
-            <div>
-              <strong 
-                className="block text-green-900 mb-1"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Recette générée avec succès !
-              </strong>
-              <p className="text-sm text-green-700">
-                Ta recette est prête. Tu peux maintenant la consulter ci-dessous.
-              </p>
-            </div>
-          </div>
-        </div>
-      )} */}
+      
 
       {/* Le modal */}
       {result && <RecipeModal recipe={result} />}
