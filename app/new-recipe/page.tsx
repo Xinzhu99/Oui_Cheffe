@@ -7,7 +7,7 @@ export default function TestPage() {
     <div className="pb-20">
       <HeaderWrapper
         header="Tu veux proposer une recette ?"
-        text="Génère ta recette avec l'IA !"
+        text="Génère ta recette avec l'IA Gen!"
       />
       <GroqForm />
     </div>

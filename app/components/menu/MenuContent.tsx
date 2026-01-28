@@ -24,7 +24,7 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
     <div className="dishList flex flex-col">
       {menu.map((group, index) => (
         <div key={index} className=" flex flex-col p-4 gap-4">
-          <h1 className=" text-[22px] font-bold leading-tight text-orange-400">
+          <h1 className=" text-[22px] font-bold leading-tight text-orange-500">
             📅 {group.date}
           </h1>
 

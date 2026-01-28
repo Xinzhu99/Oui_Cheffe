@@ -55,7 +55,7 @@ export default function GroqForm() {
             className="w-full p-4 rounded-2xl border-2 border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 transition-all duration-300 focus:outline-none focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-100"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Colle la transcription d'une vidéo de recette :"
+            placeholder="Colle la transcription d'une vidéo de recette ou demande l'IA la recette d'un plat :"
             required
             rows={10}
             style={{ 

@@ -66,7 +66,7 @@ export default function RecipesList({
               )}
 
               {/* Titre */}
-              <h3 className=" text-[22px] font-bold leading-tight text-orange-400">
+              <h3 className=" text-[22px] font-bold leading-tight text-orange-500">
                 {recipe.dishName}
               </h3>
             </div>
