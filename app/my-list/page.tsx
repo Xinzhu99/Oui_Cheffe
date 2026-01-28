@@ -60,14 +60,14 @@ export default async function MyList() {
             {/* Bouton Finaliser (principal) */}
             <Link href="/my-list/final" >
               <button
-                className="w-full px-6 py-4 rounded-2xl font-bold text-white transition-all "
+                className="w-full h-full px-4 py-4 rounded-2xl font-bold text-white transition-all "
                 style={{
                   background: "linear-gradient(135deg, #FF8C61, #FF6B35)",
                   boxShadow: "0 8px 24px rgba(255, 107, 53, 0.15)",
                   fontFamily: "'Montserrat', sans-serif",
                 }}
               >
-                Partir pour les courses
+                Je pars aux courses
               </button>
             </Link>
 

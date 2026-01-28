@@ -21,20 +21,19 @@ export default function FinalCustomizedList({ items }: { items: Item[] }) {
   };
 
   return (
-    <div className="relative pb-40">
+    <div className="relative">
       
 
       {/* Liste des articles */}
       <div className="p-4 space-y-3">
         {items.map((item) => {
-          // const isChecked = checkedItems.includes(item.id);
 
           return (
             <div
               key={item.id}
               onClick={() => handleClick(Number(item.id))}
               className={`
-                flex items-center gap-4 p-4 rounded-2xl cursor-pointer
+                flex items-center gap-4 p-2 rounded-2xl cursor-pointer
                 transition-all duration-300
                 ${
                   item.is_checked

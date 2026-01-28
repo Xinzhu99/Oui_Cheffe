@@ -1,5 +1,5 @@
 "use client";
-import { abandonList, addToChecked, checkStatus, removeFromChecked } from "@/app/actions/shoppingList";
+import { addToChecked, checkStatus, removeFromChecked } from "@/app/actions/shoppingList";
 
 type Item = {
   id: number;
@@ -24,27 +24,18 @@ export default function FinalAutoList({ items }: { items: Item[] }) {
 
   return (
     <div className="relative">
-      {/* Badge statut */}
-      <div className="p-4">
-        <div className="p-4 bg-green-100 rounded-2xl text-center">
-          <p className="text-green-800 font-bold">✅ Liste finalisée</p>
-          <p className="text-sm text-green-600 mt-1">
-            XXXXXX / {items.length} articles cochés
-          </p>
-        </div>
-      </div>
+      
 
       {/* Liste des articles */}
       <div className="p-4 space-y-3">
         {items.map((item) => {
-          // const isChecked = checkedItems.includes(item.id);
 
           return (
             <div
               key={item.id}
               onClick={() => handleClick(Number(item.id))}
               className={`
-                flex items-center gap-4 p-4 rounded-2xl cursor-pointer
+                flex items-center gap-4 p-2 rounded-2xl cursor-pointer
                 transition-all duration-300
                 ${
                   item.isChecked
