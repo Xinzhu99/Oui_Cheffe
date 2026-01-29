@@ -24,6 +24,12 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
     }, 1000);
   };
 
+  //fonction pour handle le bouton "annuler"
+
+  const handleClick = () => {
+    setShowModal(false)
+    window.location.reload();
+  }
   return (
     <>
       {showModal && (
@@ -238,7 +244,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
              <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 p-4 rounded-b-2xl flex gap-3">
               <button
                 type="button"
-                onClick={() => setShowModal(false)}
+                onClick={ handleClick}
                 className="flex-1 bg-white border-2 border-red-500 text-red-500 p-3 font-bold rounded-2xl hover:bg-red-50 transition-all active:scale-95 disabled:opacity-50"
                 style={{ fontFamily: "'Montserrat', sans-serif" }}
               >

@@ -111,7 +111,8 @@ export async function addToRecipes(formData: FormData) {
     
     revalidatePath("/"); // Recharge les données de la page d'accueil
     revalidatePath("/my-dishes"); // Recharge les données de mes plats
-    
+        revalidatePath("/new-recipe")
+
     return {
       success: true,
       message: "Recette enregistrée avec succès !",

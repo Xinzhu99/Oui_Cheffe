@@ -25,7 +25,7 @@ export default function FinalCustomizedList({ items }: { items: Item[] }) {
       
 
       {/* Liste des articles */}
-      <div className="p-4 space-y-3">
+      <div className="p-4 space-y-3 mb-10">
         {items.map((item) => {
 
           return (
