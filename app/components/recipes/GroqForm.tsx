@@ -44,7 +44,7 @@ export default function GroqForm() {
 
   return (
     <div className="px-5 py-4">
-      {/* Formulaire avec design moderne */}
+      {/* Formulaire  */}
       <form 
         onSubmit={handleSubmit}
         className="gap-4 flex flex-col p-6 transition-all duration-300"

@@ -41,12 +41,7 @@ export default function CategoryBar() {
           msOverflowStyle: 'none',
         }}
       >
-        {/* CSS pour masquer scrollbar webkit
-        <style jsx>{`
-          div::-webkit-scrollbar {
-            display: none;
-          }
-        `}</style> */}
+      
 
         {/* Bouton "Toutes" */}
         <button

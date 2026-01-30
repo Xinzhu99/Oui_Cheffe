@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function CreateList() {
   const [message, setMessage] = useState("");
-  //fonction pour ajouter des ingrédients dans ma shoopng list
+  //fonction pour ajouter des ingrédients dans ma shopping list
   const handleClick = async () => {
     const result = await addToShoppingList();
     console.log("✨", result);

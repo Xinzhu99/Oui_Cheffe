@@ -75,7 +75,12 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
                 className="flex gap-4 items-center flex-1"
               >
                 <div className="picWrapper rounded-2xl">
-                  <DishImage dishName={dish.name} dbImageUrl={dish.image} />
+                  <DishImage
+                    dishName={dish.name}
+                    dbImageUrl={dish.image}
+                    className="rounded-2xl
+                  "
+                  />
                 </div>
 
                 <div className="textWrapper">
@@ -107,9 +112,7 @@ export default function MenuContent({ menu }: { menu: DishesByDate[] }) {
 
       {/* partie message */}
       {message && (
-        <div
-          className="mx-4 mb-10 p-4 bg-red-50 rounded-2xl border-2 border-red-200"
-        >
+        <div className="mx-4 mb-10 p-4 bg-red-50 rounded-2xl border-2 border-red-200">
           <div className="flex items-start gap-3">
             <div>
               <strong

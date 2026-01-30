@@ -20,14 +20,14 @@ export function DishImage({
 
   return (
     <div className={`relative w-15 h-15 ${className}`}>
-  <Image
-    src={imageUrl}
-    alt={dishName}
-    fill
-    className="object-cover rounded-2xl" // ← Ajouter rounded-2xl ici aussi
-    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    priority={priority}
-  />
-</div>
+      <Image
+        src={imageUrl}
+        alt={dishName}
+        fill
+        className="object-cover" 
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        priority={priority}
+      />
+    </div>
   );
 }

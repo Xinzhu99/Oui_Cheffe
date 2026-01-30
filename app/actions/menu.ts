@@ -7,16 +7,12 @@ import { eq } from "drizzle-orm";
 //function qui permet d'ajouter des ingrédients d'une recette au back table menu
 export async function addToMenu(dishId: number, servings: number) {
   try {
-    // ==========================================
     // ÉTAPE 1 : Récupérer l'état actuel du menu
-    // ==========================================
     const menuItems = await db
       .select()
       .from(menu)
 
-    // ==========================================
     // ÉTAPE 2 : Vérifier si le menu est bloqué
-    // ==========================================
     // Si au moins un item est "locked", on bloque
     const isLocked = menuItems.some(item => item.status === "locked")
     
@@ -27,9 +23,7 @@ export async function addToMenu(dishId: number, servings: number) {
       }
     }
 
-    // ==========================================
     // ÉTAPE 3 : Vérifier si le plat existe déjà
-    // ==========================================
     const dishExists = menuItems.some(item => item.dish_id === dishId)
     
     if (dishExists) {
@@ -39,15 +33,13 @@ export async function addToMenu(dishId: number, servings: number) {
       }
     }
 
-    // ==========================================
     // ÉTAPE 4 : Tout est OK → Insérer le plat
-    // ==========================================
     await db
       .insert(menu)
       .values({
         servings: servings,
         dish_id: dishId,
-        status: "active" // ← Explicit, c'est mieux !
+        status: "active" 
       })
 
     revalidatePath("/my-dishes")
