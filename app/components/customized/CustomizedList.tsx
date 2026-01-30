@@ -8,6 +8,7 @@ export default function CustomizedList({
   items: Array<{
     id: number;
     name: string;
+    is_checked: boolean;
   }>;
 }) {
   const handleClick = async (id: number) => {
