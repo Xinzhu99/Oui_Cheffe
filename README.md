@@ -5,9 +5,9 @@ OuiCheffe simplifie la planification des repas hebdomadaires et génère automat
 
 **Fonctionnalités** :
 - Catalogue de recettes avec ajustement des portions
-- Planification de menu hebdomadaire
 - Génération automatique de liste de courses (consolidation intelligente des quantités)
 - Ajout manuel d'ingrédients supplémentaires
+- Génération des recettes automatiques depuis des vidéos (IA Gen)
 ## 🏗️ Stack Technique
 - **Frontend** : React, Next.js, Tailwind
 - **Backend** : Next.js Server Actions
@@ -29,15 +29,6 @@ L'algorithme agrège les quantités d'ingrédients identiques de plusieurs recet
 ### 3. Interface Mobile-First
 Design pensé pour une utilisation en magasin avec navigation par onglets et micro-interactions.
 
-## 🎯 Roadmap
-
-**MVP (en cours)**
-- [x] Modélisation BDD
-- [x] Maquette UI mobile
-- [x] Server Actions (CRUD)
-- [x] Intégration frontend ↔ backend
-- [ ] 🚀 Feature IA : génération de recettes à partir de liens vidéos"
-- [ ] Déploiement
 
 **À venir**
 - Authentification utilisateur et partage des listes
