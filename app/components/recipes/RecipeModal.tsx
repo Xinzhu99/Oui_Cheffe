@@ -3,6 +3,7 @@
 import { addToRecipes } from "@/app/actions/recipes";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import { CldUploadWidget } from "next-cloudinary";
 
 interface RecipeModalProps {
   recipe: any;
@@ -27,9 +28,9 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
   //fonction pour handle le bouton "annuler"
 
   const handleClick = () => {
-    setShowModal(false)
+    setShowModal(false);
     window.location.reload();
-  }
+  };
   return (
     <>
       {showModal && (
@@ -127,9 +128,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               </div>
 
               {/* Section Ingrédients */}
-              <div
-                
-              >
+              <div>
                 <h3
                   className="text-lg font-bold mb-4 text-orange-500"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -190,9 +189,7 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               </div>
 
               {/* Section Instructions */}
-              <div
-                
-              >
+              <div>
                 <h3
                   className="text-lg font-bold mb-4 text-orange-500"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
@@ -211,6 +208,35 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
                   }}
                 />
               </div>
+
+              {/* Section upload image */}
+              {/* <div>
+                <h3
+                  className="text-lg font-bold mb-4 text-orange-500"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  🖼️ Image
+                </h3>
+
+                <CldUploadWidget signatureEndpoint="/api/cloudinary">
+                  {({ open }) => {
+                    return (
+                      <button
+                        onClick={() => open()}
+                        className="flex-1 text-white p-3 font-bold rounded-2xl transition-all active:scale-95 disabled:opacity-50"
+                        style={{
+                          background:
+                            "#D1D5DB linear-gradient(135deg, #FF8C61, #FF6B35)",
+                          fontFamily: "'Montserrat', sans-serif",
+                        }}
+                        type="button"
+                      >
+                        Ajouter une photo
+                      </button>
+                    );
+                  }}
+                </CldUploadWidget>
+              </div> */}
 
               {/* Message de feedback */}
               {message && (
@@ -241,27 +267,28 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               )}
 
               {/* Boutons d'action */}
-             <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 p-4 rounded-b-2xl flex gap-3">
-              <button
-                type="button"
-                onClick={ handleClick}
-                className="flex-1 bg-white border-2 border-red-500 text-red-500 p-3 font-bold rounded-2xl hover:bg-red-50 transition-all active:scale-95 disabled:opacity-50"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Annuler
-              </button>
+              <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 p-4 rounded-b-2xl flex gap-3">
+                <button
+                  type="button"
+                  onClick={handleClick}
+                  className="flex-1 bg-white border-2 border-red-500 text-red-500 p-3 font-bold rounded-2xl hover:bg-red-50 transition-all active:scale-95 disabled:opacity-50"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Annuler
+                </button>
 
-              <button
-                type="submit"
-                className="flex-1 text-white p-3 font-bold rounded-2xl transition-all active:scale-95 disabled:opacity-50"
-                style={{
-                  background: '#D1D5DB linear-gradient(135deg, #FF8C61, #FF6B35)',
-                  fontFamily: "'Montserrat', sans-serif",
-                }}
-              >
-                Enregistrer
-              </button>
-            </div>
+                <button
+                  type="submit"
+                  className="flex-1 text-white p-3 font-bold rounded-2xl transition-all active:scale-95 disabled:opacity-50"
+                  style={{
+                    background:
+                      "#D1D5DB linear-gradient(135deg, #FF8C61, #FF6B35)",
+                    fontFamily: "'Montserrat', sans-serif",
+                  }}
+                >
+                  Enregistrer
+                </button>
+              </div>
             </form>
           </div>
         </div>
