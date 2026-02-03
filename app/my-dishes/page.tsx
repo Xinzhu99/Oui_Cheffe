@@ -26,7 +26,7 @@ export default async function MyDishes() {
 
   return (
     <div className="flex flex-col ">
-      <HeaderWrapper header="Mon menu" text="Vos plats à cuisiner" />
+      <HeaderWrapper header="Mon menu" text="Tes plats à cuisiner" />
 
       <MenuContent menu={menuArr} />
       {menuArr.length >0 &&<CreateList />}

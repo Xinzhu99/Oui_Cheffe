@@ -1,5 +1,4 @@
 import { getDishImageUrl } from "@/lib/utils/dish-images";
-import { boolean } from "drizzle-orm/gel-core";
 import Image from "next/image";
 
 interface DishImageProps {

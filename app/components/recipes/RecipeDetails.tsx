@@ -29,7 +29,7 @@ export default function RecipeDetails({
 
   //fonction permettant d'actualiser les quantité d'ingrédients
   const ajustedQty = (defaultQty: number) => {
-    return Math.round((defaultQty / defaultServings) * servings);
+    return ((defaultQty / defaultServings) * servings);
   };
 
   //fonction pour gérér le click bouton : appel d'action et recevoir le retour message

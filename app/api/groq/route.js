@@ -43,7 +43,7 @@ STRUCTURE EXACTE à respecter :
     "name": "nom exact de la recette",
     "prep_time": temps total en minutes (nombre entier),
     "category": "choisis UNE catégorie parmi: ${existing_dish_cats.join(', ')}",
-    "instructions": "toutes les étapes de préparation en un seul texte continu"
+    "instructions": "toutes les étapes de préparation en un seul texte continu",
   },
   "ingredients": [
     {

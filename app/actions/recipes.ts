@@ -115,7 +115,7 @@ export async function addToRecipes(formData: FormData) {
 
     return {
       success: true,
-      message: "Recette enregistrée avec succès !",
+      message: "✅ Recette enregistrée avec succès !",
       dishId: newDish.id,
     };
 
