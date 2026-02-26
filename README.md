@@ -29,6 +29,9 @@ L'algorithme agrège les quantités d'ingrédients identiques de plusieurs recet
 ### 3. Interface Mobile-First
 Design pensé pour une utilisation en magasin avec navigation par onglets et micro-interactions.
 
+### 4. Intégration d'IA Gen 
+IA Gen pour générer des recettes automatique à partir des vidéos Youtube
+
 
 **À venir**
 - Authentification utilisateur et partage des listes
