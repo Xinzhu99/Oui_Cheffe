@@ -18,10 +18,12 @@ export async function addToRecipes(formData: FormData) {
     const dishName = formData.get("name") as string;
     const categoryName = formData.get("category") as string;
     const instructions = formData.get("instructions") as string;
+    const imageUrl = formData.get("url") as string;
 
     console.log("📋 Plat:", dishName);
     console.log("⏱️ Temps:", prepTime);
     console.log("🏷️ Catégorie:", categoryName);
+    console.log("📸 Image URL reçue:", imageUrl); 
 
     //extraire les ingrédients
     let ingredientsList = [];
@@ -68,6 +70,8 @@ export async function addToRecipes(formData: FormData) {
         prep_time: prepTime,
         instructions: instructions,
         dish_category_id: categoryId,
+        image_url: imageUrl,
+
       })
       .returning({ id: dishes.id });
     console.log("Plat crée !!!!!:", newDish);

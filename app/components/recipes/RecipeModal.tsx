@@ -12,6 +12,7 @@ interface RecipeModalProps {
 export default function RecipeModal({ recipe }: RecipeModalProps) {
   const [showModal, setShowModal] = useState(true);
   const [message, setMessage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   //fonction handleSubmit pour envoyer la data au back
 
@@ -210,33 +211,45 @@ export default function RecipeModal({ recipe }: RecipeModalProps) {
               </div>
 
               {/* Section upload image */}
-              {/* <div>
-                <h3
-                  className="text-lg font-bold mb-4 text-orange-500"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  🖼️ Image
-                </h3>
-
-                <CldUploadWidget signatureEndpoint="/api/cloudinary">
-                  {({ open }) => {
-                    return (
-                      <button
-                        onClick={() => open()}
-                        className="flex-1 text-white p-3 font-bold rounded-2xl transition-all active:scale-95 disabled:opacity-50"
-                        style={{
-                          background:
-                            "#D1D5DB linear-gradient(135deg, #FF8C61, #FF6B35)",
-                          fontFamily: "'Montserrat', sans-serif",
-                        }}
-                        type="button"
-                      >
-                        Ajouter une photo
-                      </button>
-                    );
+              <div>
+                
+                <CldUploadWidget 
+                  signatureEndpoint="/api/cloudinary"
+                  uploadPreset="oui_cheffe"  
+                  onSuccess={(result: any) => {
+                    setImageUrl(result.info.secure_url);
                   }}
+                >
+                  {({ open }) => (
+                    <button
+                      onClick={() => open()}
+                      className="flex-1 text-white p-3 font-bold rounded-2xl transition-all active:scale-95 disabled:opacity-50"
+                      style={{
+                        background: "#D1D5DB linear-gradient(135deg, #FF8C61, #FF6B35)",
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                      type="button"
+                    >
+                      Ajouter une photo
+                    </button>
+                  )}
                 </CldUploadWidget>
-              </div> */}
+                <input name="url"
+                      type="hidden"
+                      value={imageUrl}
+                      />
+              </div>
+
+              {imageUrl && (
+                <div className="mt-4">
+                  <p className="text-sm text-gray-600 mb-2">✅ Photo ajoutée :</p>
+                  <img 
+                    src={imageUrl} 
+                    alt="Preview" 
+                    className="w-32 h-32 object-cover rounded-lg"
+                  />
+                </div>
+              )}
 
               {/* Message de feedback */}
               {message && (
