@@ -56,13 +56,12 @@ STRUCTURE EXACTE à respecter :
 }
 
 RÈGLES IMPORTANTES :
-1. Adapte la recette pour exactement 2 personnes / services
-2. Pour prep_time, estime le temps total de préparation en minutes
-3. Pour les catégories, choisis celle qui correspond le MIEUX
-4. Réponds UNIQUEMENT avec le JSON valide
-5. N'ajoute AUCUN texte avant ou après le JSON
-6. N'utilise PAS de \`\`\`json ou autre formatage Markdown
-7. Pour le name de chaque ingrédient, la prémière lettre est au majuscule
+1. Pour prep_time, estime le temps total de préparation en minutes
+2. Pour les catégories, choisis celle qui correspond le MIEUX
+3. Réponds UNIQUEMENT avec le JSON valide
+4. N'ajoute AUCUN texte avant ou après le JSON
+5. N'utilise PAS de \`\`\`json ou autre formatage Markdown
+6. Pour le name de chaque ingrédient, la prémière lettre est au majuscule
 
 Transcription de la recette :
 ${transcript}`;
